@@ -10,16 +10,19 @@ class AccountCreation extends Component {
     this.state = {
       isUploading: false,
       url: 'http://via.placeholder.com/450x450',
+      bio: ''
     };
   }
 
   getSignedRequest = ([file]) => {
+    console.log(file)
     this.setState({ isUploading: true });
     const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
+    console.log('HELLO!!!!!!!!!!!!!!!!!');
 
 
     axios
-      .get('/api/signs3', {
+      .get('/api/sign-s3', {
         params: {
           'file-name': fileName,
           'file-type': file.type,
@@ -38,8 +41,10 @@ class AccountCreation extends Component {
     const options = {
       headers: {
         'Content-Type': file.type,
-      },
+      },      
     };
+
+    
 
     axios
       .put(signedRequest, file, options)
@@ -73,6 +78,7 @@ class AccountCreation extends Component {
         
 
         <Dropzone
+          onDropAccepted={this.getSignedRequest}
           style={{
             position: 'relative',
             width: 200,
@@ -92,22 +98,18 @@ class AccountCreation extends Component {
         >
           {({getRootProps, getInputProps}) => (
             <section>
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
                 <div>
-                  {this.state.isUploading 
+                  {isUploading 
                   ? 
                   <BeatLoader style={{}}/> 
                   :
                   <p>Drag 'n' drop some files here, or click to select files</p>}
                 </div>
-                
-              </div>
-
             </section>
           )}
         </Dropzone>
-        <textarea name="Bio" id="" cols="30" rows="10" placeholder="Enter your bio here." maxLength="140"></textarea>
+        <textarea value="{bio}" onchange={e => this.handleChange('bio', e.target.value)} name="Bio" id="" cols="30" rows="10" placeholder="Enter your bio here." maxLength="140"></textarea>
+        <button type='submit' id='submit'>Submit</button>
       </div>
     );
   }
