@@ -23,3 +23,14 @@ massive(CONNECTION_STRING).then(db => {
     console.log(`listening on server ${SERVER_PORT}`)
   );
 });
+
+app.get(`/currentuser`) //pull user off sessions
+app.get(`/profile`) //pull user_id from sessions and name, password, bio, profile pic, email address from body
+app.get(`/landingpage`)
+app.get(`/surveypage`)
+
+app.post(`/login`) //pull username & password off body
+app.post(`register`) //pull username & password off body
+app.post(`/accountcreation`) //pull name, bio, profile image, email address off body
+app.post(`/editprofile`) //pull user_id from sessions and name, password, bio, profile pic, and email address from body
+app.post(`/surveysubmit`) //pull answer val from body
