@@ -1,0 +1,1 @@
+insert into users (profile_pic,bio) where user_id = user
