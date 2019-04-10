@@ -48,9 +48,9 @@ export default function Login(props){
             }
             
         try {
-            let res = await axios.post('/auth/login', user);
+            let res = await axios.post('login', user);
          props.updateUser(res.data)
-         props.history.push('/private')
+         props.history.push('/landing')
         } catch(err) {
             alert('Incorrect username or password')
         }

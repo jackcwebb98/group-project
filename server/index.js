@@ -3,6 +3,7 @@ const express = require('express');
 const massive = require('massive');
 const session = require('express-session');
 const aws = require('aws-sdk');
+const ctrl = require('./controller')
 
 const app = express();
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
@@ -25,13 +26,14 @@ massive(CONNECTION_STRING).then(db => {
   );
 });
 
+
 app.get(`/currentuser`) //pull user off sessions
 app.get(`/profile`) //pull user_id from sessions and name, password, bio, profile pic, email address from body
 app.get(`/landingpage`)
 app.get(`/surveypage`)
 
-app.post(`/login`) //pull username & password off body
-app.post(`register`) //pull username & password off body
+app.post(`/login`, ctrl.login) //pull username & password off body
+app.post(`register`, ctrl.register) //pull username & password off body
 app.post(`/accountcreation`) //pull name, bio, profile image, email address off body
 app.post(`/editprofile`) //pull user_id from sessions and name, password, bio, profile pic, and email address from body
 app.post(`/surveysubmit`) //pull answer val from body
