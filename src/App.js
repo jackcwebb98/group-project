@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import './App.css';
-import Registration from './components/Registration'
+import React, { Component } from "react";
+import "./App.css";
+import { HashRouter } from "react-router-dom";
+import routes from './routes'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Registration />
-      </div>
+      <HashRouter>
+        <div className="App">{routes}</div>
+      </HashRouter>
     );
   }
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.437.0",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^7.0.0",
@@ -11,8 +12,14 @@
     "massive": "^5.7.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^4.3.0",
+    "react-s3": "^1.3.1",
+    "react-scripts": "2.1.8",
+    "react-spinners": "^0.5.4",
+    "uuid": "^3.3.2",
     "react-google-login": "^5.0.4",
-    "react-scripts": "2.1.8"
+    "react-router-dom": "^5.0.0",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
