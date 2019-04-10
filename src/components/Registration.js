@@ -1,4 +1,5 @@
 import React from 'react'
+// import styled from 'styled-components'
 
 export default class Registration extends React.Component {
     state={
@@ -56,10 +57,10 @@ export default class Registration extends React.Component {
             <>
                 <form form onSubmit={this.handleSubmit} >
                     <input value={username} placeholder='Username' maxLength={30} onChange={e=> this.handleChange("username", e.target.value)}/>
-                    <input value={email} placeholder='email' onChange={e=> this.handleChange("email", e.target.value)}/>
-                    <input value={emailCheck} placeholder='email' onChange={e=> this.handleChange("emailCheck", e.target.value)}/>
-                    <input value={password} placeholder='password' maxLength={30} onChange={e=> this.handleChange("password", e.target.value)}/>
-                    <input value={passwordCheck} placeholder='password' maxLength={30} onChange={e=> this.handleChange("passwordCheck", e.target.value)}/>
+                    <input value={email} placeholder='Email' onChange={e=> this.handleChange("email", e.target.value)}/>
+                    <input value={emailCheck} placeholder='Retype Email' onChange={e=> this.handleChange("emailCheck", e.target.value)}/>
+                    <input value={password} placeholder='Password' maxLength={30} onChange={e=> this.handleChange("password", e.target.value)}/>
+                    <input value={passwordCheck} placeholder='Retype Password' maxLength={30} onChange={e=> this.handleChange("passwordCheck", e.target.value)}/>
                     <button>Submit</button>
                 </form>
             </>
