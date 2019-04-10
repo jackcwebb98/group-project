@@ -25,16 +25,21 @@ module.exports = {
   },
 
   register: async (req, res) => {
+    console.log(req.body)
     const { username, password, email } = req.body;
     const { session } = req;
     const db = req.app.get("db");
-    let takenUsername = await db.auth.check_username({ username, email });
+    let takenUsername = await db.auth.check_username({ username });
+    let takenEmail = await db.auth.check_email({ email });
+    takenEmail = +takenEmail[0].count
     takenUsername = +takenUsername[0].count;
     try {
-      if (takenUsername !== 0) {
-        return res.sendStatus(409);
+      if (takenUsername != 0) {
+        return res.send("username");
       }
-
+      if (takenEmail !=0){
+        return res.status(409).send("email")
+      }
       let salt = bcrypt.genSaltSync(10);
       let hash = bcrypt.hashSync(password, salt);
       let user = await db.auth.register({ username, password: hash, email });
