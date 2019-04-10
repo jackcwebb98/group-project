@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 // import styled from 'styled-components'
 
 export default class Registration extends React.Component {
@@ -44,7 +45,12 @@ export default class Registration extends React.Component {
         } else {console.log('email doesnt match')}
         if(this.checkPassword() === true) {
             console.log('password match')
-        }if (this.checkEmail()===true && this.checkPassword()===true){this.setState({username: '', password:'', passwordCheck:'', email:'', emailCheck:''})}
+        }if (this.checkEmail()===true && this.checkPassword()===true){
+            this.setState({username: '', password:'', passwordCheck:'', email:'', emailCheck:''}
+            )
+            this.props.history.push('/accountcreation')
+        }
+
     }
 
 
@@ -62,6 +68,7 @@ export default class Registration extends React.Component {
                     <input value={password} placeholder='Password' maxLength={30} onChange={e=> this.handleChange("password", e.target.value)}/>
                     <input value={passwordCheck} placeholder='Retype Password' maxLength={30} onChange={e=> this.handleChange("passwordCheck", e.target.value)}/>
                     <button>Submit</button>
+                    
                 </form>
             </>
         )
