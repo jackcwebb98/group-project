@@ -14,5 +14,6 @@ export default (
     <Route path="/register" component={Registration}/>
     <Route path="/accountcreation" component={AccountCreation}/>
     <Route exact path="/" component={Login} />
+    <Route exact path="/register" component={Registration} />
   </Switch>
 )
