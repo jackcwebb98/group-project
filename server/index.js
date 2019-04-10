@@ -28,7 +28,7 @@ massive(CONNECTION_STRING).then(db => {
 
 
 app.get(`/currentuser`, ctrl.currentUser) //pull user off sessions
-app.get(`/profile`, ctrl.getProfile) //pull user_id from sessions and name, password, bio, profile pic, email address from body
+app.get(`/profile/:user_id`, ctrl.getProfile) //pull user_id from sessions and name, password, bio, profile pic, email address from body
 app.get(`/landingpage`, ctrl.landingPage)
 app.get(`/surveypage`, ctrl.surveyQuestions)
 
