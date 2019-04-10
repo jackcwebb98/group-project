@@ -1,1 +1,3 @@
-insert into users (profile_pic,bio) where user_id = user
+update users 
+set profile_pic = ${profile_pic}, bio = ${bio}
+where user_id = ${user_id}
