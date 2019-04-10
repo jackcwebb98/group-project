@@ -121,6 +121,8 @@ export default class Registration extends React.Component {
                     alert('Pick different Email')
                 } else {
                     this.setState({username: '', password:'', passwordCheck:'', email:'', emailCheck:''})
+                    this.props.history.push('/accountcreation')
+
                 }
             } catch (err) {console.log(err)}
         }
