@@ -59,10 +59,16 @@ module.exports = {
   },
 
   getProfile: async (req, res) => {
-    const { user_id } = req.session.user;
+    let { user_id } = req.params;
+    user_id = parseInt(user_id)
+    console.log(user_id)
     const db = req.app.get("db");
-    let profile = await db.profile.get_profile({ user_id });
-    console.log(profile);
+    try {
+        let profile = await db.profile.get_profile({ user_id });
+        res.status(200).send(profile);
+    } catch (err) {
+        console.log(err)
+    }
   },
 
   updateProfile: async (req, res) => {
