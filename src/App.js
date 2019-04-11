@@ -3,6 +3,7 @@ import "./App.css";
 import { HashRouter } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/styles';
 import routes from './routes'
+import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
 
 class App extends Component {
@@ -14,7 +15,9 @@ class App extends Component {
     return (
       <HashRouter>
         <MuiThemeProvider theme={defaultTheme}>
-          <div className="App">{routes}</div>
+        <div className="App">{routes}
+          <NavBar location={this.props.location} />
+        </div>
         </MuiThemeProvider>
       </HashRouter>
     );
