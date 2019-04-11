@@ -97,8 +97,6 @@ function Login(props){
 
         try {
             let res = await axios.post('login', user);
-
-            console.log(res.data.email)
             props.history.push('/landing')
         } catch (err) {
             alert('Incorrect username or password')
