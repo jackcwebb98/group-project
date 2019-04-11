@@ -1,3 +1,37 @@
+create table users (
+user_id serial primary key,
+username varchar, 
+password text, 
+email varchar, 
+name varchar, 
+bio varchar(140), 
+rating int, 
+profile_pic text
+)
+
+create table survey_questions (
+question_id serial primary key,
+question_text varchar,
+example_text varchar
+)
+
+create table answers (
+date DATE,
+question_id int,
+answer_val int, 
+user_id int,
+questionee_id int
+)
+
+alter table answers
+add foreign key (question_id) references survey_questions (question_id)
+
+alter table answers
+add foreign key (user_id) references users (user_id)
+
+alter table answers
+add foreign key (questionee_id) references users (user_id)
+
 insert into survey_questions (question_text, example_text)
 values ('Planning', 'How much thought was put into the date?');
 
