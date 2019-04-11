@@ -3,13 +3,44 @@ import axios from 'axios';
 import { v4 as randomString } from 'uuid';
 import Dropzone from 'react-dropzone';
 import { BeatLoader } from 'react-spinners';
+import styled from 'styled-components';
+
+const TextArea = styled.textarea`
+background: rgb(247,247,247, 0.6);
+border-radius: 10px;
+border: none;
+flexwrap: wrap;
+width: 60vw;
+margin: 10px
+`
+const Div = styled.div`
+display:flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+position:realative;
+`
+const Img = styled.img`
+position: relative;
+top: 15px;
+margin-bottom: 15px;
+`
+const Button = styled.button`
+background: #FC510B;
+border-radius: 10px;
+border: none;
+width: 15vw;
+height: 25px;
+color: #f7f7f7 
+`
+
 
 class AccountCreation extends Component {
   constructor() {
     super();
     this.state = {
       isUploading: false,
-      profile_pic: 'http://via.placeholder.com/450x450',
+      url: 'http://via.placeholder.com/450x450',
       bio: ''
     };
   }
@@ -28,15 +59,15 @@ class AccountCreation extends Component {
         },
       })
       .then(response => {
-        const { signedRequest, profile_pic } = response.data;
-        this.uploadFile(file, signedRequest, profile_pic);
+        const { signedRequest, url } = response.data;
+        this.uploadFile(file, signedRequest, url);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  uploadFile = (file, signedRequest, profile_pic) => {
+  uploadFile = (file, signedRequest, url) => {
     const options = {
       headers: {
         'Content-Type': file.type,
@@ -48,7 +79,7 @@ class AccountCreation extends Component {
     axios
       .put(signedRequest, file, options)
       .then(response => {
-        this.setState({ isUploading: false, profile_pic });
+        this.setState({ isUploading: false, url });
       })
       .catch(err => {
         this.setState({
@@ -56,7 +87,7 @@ class AccountCreation extends Component {
         });
         if (err.response.status === 403) {
           alert(
-            `Your request for a signed profile_pic failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
+            `Your request for a signed url failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
               err.stack
             }`
           );
@@ -72,12 +103,24 @@ class AccountCreation extends Component {
     })
   }
 
+  create = async () => {
+    let userInfo = {
+      bio: this.state.bio,
+      profile_pic: this.state.url,
+    }
+    try {
+      let res = await axios.post('/accountcreation', userInfo )
+      this.props.history.push('/words')
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
   render() {
-    const { profile_pic, isUploading } = this.state;
+    const { url, isUploading, bio } = this.state;
     return (
-      <div className="AccountCreation">
-        <h1>Upload</h1>
-        <img src={profile_pic} alt="" width="450px" />
+      <Div className="AccountCreation">
+        <Img src={url} alt="Preview of profile"/>
 
         
 
@@ -85,17 +128,18 @@ class AccountCreation extends Component {
           onDropAccepted={this.getSignedRequest}
           style={{
             position: 'relative',
-            width: 200,
-            height: 200,
-            borderWidth: 7,
-            marginTop: 100,
+            width: '60vw',
+            height: '20vh',
+            margin: 10,
+            border: 'none',
             borderColor: 'rgb(102, 102, 102)',
-            borderStyle: 'dashed',
-            borderRadius: 5,
+            borderRadius: '10px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             fontSize: 28,
+            background: 'rgb(247,247,247, 0.6)',
+            
           }}
           accept="image/*"
           multiple={false}
@@ -112,9 +156,9 @@ class AccountCreation extends Component {
             </section>
           )}
         </Dropzone>
-        <textarea value="{bio}" onchange={e => this.handleChange('bio', e.target.value)} name="Bio" id="" cols="30" rows="10" placeholder="Enter your bio here." maxLength="140"></textarea>
-        <button type='submit' id='submit'>Submit</button>
-      </div>
+        <TextArea placeholder="Please enter your bio here" value={bio} onChange={e => this.handleChange('bio', e.target.value)} ></TextArea>
+        <Button onClick={this.create}>Submit</Button>
+      </Div>
     );
   }
 }
