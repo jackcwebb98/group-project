@@ -13,7 +13,6 @@ module.exports = {
       return res.sendStatus(404);
     }
     let authenticated = bcrypt.compareSync(password, user.password);
-    console.log({ authenticated });
     if (authenticated) {
       delete user.password;
       session.user = user;
@@ -66,7 +65,6 @@ module.exports = {
   getProfile: async (req, res) => {
     let { user_id } = req.params;
     user_id = parseInt(user_id)
-    console.log(user_id)
     const db = req.app.get("db");
     try {
         let profile = await db.profile.get_profile({ user_id });
@@ -121,5 +119,9 @@ module.exports = {
           res.sendStatus(401);
         }
       }, 0);
+  },
+
+  logout: (req, res) => {
+    req.session.destroy(function(){res.sendStatus(200)})
   }
 };
