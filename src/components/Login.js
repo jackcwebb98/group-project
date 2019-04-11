@@ -89,24 +89,24 @@ function Login(props){
     const [password, setPassword] = useState('')
     // const [userId, setUserId] = useState('')
 
-    async function loginUser(username,password) {
-            let user = {
-                username: username,
-                password: password
-            }
-            
+    async function loginUser(username, password) {
+        let user = {
+            username: username,
+            password: password
+        }
+
         try {
             let res = await axios.post('login', user);
-         
-         console.log(res.data.email)
-         props.history.push('/landing')
-        } catch(err) {
+
+            console.log(res.data.email)
+            props.history.push('/landing')
+        } catch (err) {
             alert('Incorrect username or password')
         }
     }
 
 
-    return(
+    return (
         <>
         <div className={classes.imgWrap}>
             <img className={classes.img} src={logo}/>
