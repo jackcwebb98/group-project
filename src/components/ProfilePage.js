@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import checkUser from "../util";
 
 export default function Profile(props) {
   const [name, setName] = useState("");
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [bio, setBio] = useState("");
 
@@ -22,6 +22,7 @@ export default function Profile(props) {
   }
 
   useEffect(() => {
+    checkUser(props);
     getUser();
   });
 
