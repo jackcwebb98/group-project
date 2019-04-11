@@ -5,13 +5,15 @@ import { Route, Switch} from 'react-router-dom'
 import Login from './components/Login';
 import AccountCreation from './components/AccountCreation';
 import Registration from './components/Registration';
+import Profile from './components/ProfilePage'
 
 //add routes to each component you make. make the path "/component name"
 export default (
   <Switch>
-    {/* <Route path="/profile" component={ProfilePage}/> */}
+    <Route path="/profile" component={Profile}/>
     <Route path="/register" component={Registration}/>
     <Route path="/accountcreation" component={AccountCreation}/>
+    <Route exact path="/register" component={Registration} />
     <Route exact path="/" component={Login} />
   </Switch>
 )

@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import "./App.css";
 import { HashRouter } from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/styles';
 import routes from './routes'
-import CssBaseline from '@material-ui/core/CssBaseline';
+import defaultTheme from './themes/defaultTheme'
 
 class App extends Component {
+  
   render() {
+
+    const theme = createMuiTheme();
+
     return (
       <HashRouter>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <CssBaseline />
-        <div className="App">{routes}</div>
+        <MuiThemeProvider theme={defaultTheme}>
+          <div className="App">{routes}</div>
+        </MuiThemeProvider>
       </HashRouter>
     );
   }
 }
 
-export default App;
+export default withTheme()(App);
