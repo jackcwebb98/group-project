@@ -9,7 +9,7 @@ import Registration from './components/Registration';
 //add routes to each component you make. make the path "/component name"
 export default (
   <Switch>
-    <Route path="/profile" component={ProfilePage}/>
+    {/* <Route path="/profile" component={ProfilePage}/> */}
     <Route path="/register" component={Registration}/>
     <Route path="/accountcreation" component={AccountCreation}/>
     <Route exact path="/" component={Login} />

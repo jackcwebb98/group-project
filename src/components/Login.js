@@ -23,7 +23,7 @@ hieght: 300px;
 width: 80%;
 overflow: hidden;
 position: absolute;
-top: 10vh;
+top: 10vh
 `
 const LoginDiv = styled.div`
 display:flex;
