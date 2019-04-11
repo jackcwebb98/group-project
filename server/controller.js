@@ -116,7 +116,7 @@ module.exports = {
         if (user) {
           res.status(200).send(user);
         } else {
-          res.sendStatus(401);
+          res.send('no user')
         }
       }, 0);
   },
