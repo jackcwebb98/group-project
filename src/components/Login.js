@@ -5,17 +5,15 @@ import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import logo from './images/E-VAL-U-DATE.png'
+import logo from './images/LgNoBG.png';
+import glass from './images/Logo.png';
 
 
 
@@ -48,8 +46,9 @@ const styles = theme => ({
 
     },
     avatar: {
+      padding: 25,
       margin: theme.spacing.unit,
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
     form: {
       width: '100%', // Fix IE 11 issue.
@@ -57,7 +56,10 @@ const styles = theme => ({
     },
     submit: {
       marginTop: theme.spacing.unit * 3,
-      backgroundColor: theme.palette.secondary.main
+      backgroundColor: theme.palette.secondary.main,
+      '&:hover': {
+          backgroundColor: theme.palette.secondary.hover,
+      }
     },
 
     imgWrap: {
@@ -70,12 +72,28 @@ const styles = theme => ({
 
     img: {
         width: '100%',
-        height: 'auto',
+        objectFit: 'cover',
+        minHeight: '100%',
+        minWidth: '100%',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+          width: 400,
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        },
     },
 
     link: {
         textDecoration: 'none',
     },
+
+    glass: {
+        width: '100%',
+        minHeight: '200%',
+        minWidth: '200%',
+    }
 
 
 
@@ -114,11 +132,8 @@ function Login(props){
         <main className={classes.main}>
             <Paper className={classes.paper}>
             <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
+                <img src={glass} alt="" className={classes.glass}/>
             </Avatar>
-            <Typography component="h1" variant="h5">
-                Sign in
-            </Typography>
             <form className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email or Username</InputLabel>
@@ -128,10 +143,6 @@ function Login(props){
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input name="password" type="password" id="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} />
                 </FormControl>
-                <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                />
                 <Button
                     type="submit"
                     fullWidth

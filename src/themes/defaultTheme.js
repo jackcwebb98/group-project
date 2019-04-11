@@ -12,11 +12,13 @@ const defaultTheme = createMuiTheme({
     secondary: {
       light: '#f7f7f7',
       main: '#FC510B',
+      hover: '#e24404',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
     // error: will use the default color
       typography: {
+        color: '#f7f7f7',
         useNextVariants: true,
       }
   },
