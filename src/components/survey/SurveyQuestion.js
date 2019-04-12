@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 function SurveyQuestion(props) {
-  const { answerValue, id } = props;
+  const { answerValue} = props;
   const [question, setQuestion] = useState({});
 
   function setQuestionOnState() {
@@ -24,8 +24,8 @@ function SurveyQuestion(props) {
     setQuestionOnState();
   });
 
-  function test(e) {
-    answerValue(id, e.target.value)
+  function answerChange(e) {
+    answerValue(question.question_id, e.target.value)
   }
 
 
@@ -35,7 +35,7 @@ function SurveyQuestion(props) {
         <Typography>{question.question_text}</Typography>
         <Typography>{question.example_text}</Typography>
         <FormControl component="fieldset">
-          <RadioGroup name="answers" onChange={test}>
+          <RadioGroup name="answers" onChange={answerChange}>
             <FormControlLabel value="1" control={<Radio />} label="1" />
             <FormControlLabel value="2" control={<Radio />} label="2" />
             <FormControlLabel value="3" control={<Radio />} label="3" />
