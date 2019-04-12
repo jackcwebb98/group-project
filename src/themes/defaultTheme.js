@@ -6,6 +6,7 @@ const defaultTheme = createMuiTheme({
     primary: {
       // light: will be calculated from palette.primary.main,
       main: '#6AC5F4',
+      dark: '#092B2B'
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
@@ -18,7 +19,6 @@ const defaultTheme = createMuiTheme({
     },
     // error: will use the default color
       typography: {
-        color: '#f7f7f7',
         useNextVariants: true,
       }
   },
