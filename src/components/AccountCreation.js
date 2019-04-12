@@ -110,7 +110,7 @@ class AccountCreation extends Component {
     }
     try {
       let res = await axios.post('/accountcreation', userInfo )
-      this.props.history.push('/words')
+      this.props.history.push('/landing')
     } catch(err) {
       console.log(err)
     }

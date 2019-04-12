@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import ProfilePage from './ProfilePage';
 
 
 export default function Landing() {
@@ -39,11 +40,19 @@ export default function Landing() {
 
   const mapped = filtered.map(name => {
     return (
-      <div>
+      <div onClick={toProfilePage}>
+        {name.profile_pic}
         {name.username}
+        <ProfilePage
+        data={name}
+        />
       </div>
     )
   })
+
+  function toProfilePage(){
+
+  }
 
   return (
     //header comes in here
