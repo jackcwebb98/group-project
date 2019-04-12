@@ -76,7 +76,7 @@ function NavBar(props) {
     // }
 
 
-    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' ){
+    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
         return (
             <AppBar className={classes.AppBar}>
               <div className={classes.notificationBox}>
