@@ -1,1 +1,1 @@
-SELECT * FROM users WHERE username = ${username}
+SELECT * FROM users WHERE username = ${username} OR email = ${username}

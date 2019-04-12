@@ -5,6 +5,7 @@ module.exports = {
     const { username, password } = req.body;
     const { session } = req;
     const db = req.app.get("db");
+    
     let user = await db.auth.login({ username });
 
     user = user[0];
