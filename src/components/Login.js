@@ -151,6 +151,7 @@ function Login(props){
                 >
                     Sign in
                 </Button>
+                
                 <Link className={classes.link} to={'/register'}>
                 <Button
                     type="submit"
