@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import axios from 'axios';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import logo from './images/BlackLogo.png';
 
 const RegisterPage = styled.div`
 display:flex;
@@ -123,7 +124,7 @@ export default class Registration extends React.Component {
         return (
             <RegisterPage>
                 <Form onSubmit={this.handleSubmit} >
-                    <LogoImg src="https://trello-attachments.s3.amazonaws.com/5ca7c5be629a90869b43bcaa/500x500/edf9959df2fe8efd713e62192ad67d96/E-VAL-U-DATE_BL_BG.png"/>
+                    <LogoImg src={logo}/>
                         <InputBox>
                             <Input value={username} placeholder='Username' maxLength={30} onChange={e=> this.handleChange("username", e.target.value)}/>
                             <Input value={email} placeholder='Email' onChange={e=> this.handleChange("email", e.target.value)}/>

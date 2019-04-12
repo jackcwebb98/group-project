@@ -12,7 +12,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
-import logo from './images/LgNoBG.png';
+import logo from './images/BlackLogo.png';
 import glass from './images/Logo.png';
 
 
@@ -57,6 +57,7 @@ const styles = theme => ({
     submit: {
       marginTop: theme.spacing.unit * 3,
       backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.primary.dark,
       '&:hover': {
           backgroundColor: theme.palette.secondary.hover,
       }
@@ -67,17 +68,17 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative', 
-        margin: 25,
+        width: '135%',
     },
 
     img: {
-        width: '100%',
+        width: '90vw',
         objectFit: 'cover',
         minHeight: '100%',
         minWidth: '100%',
         display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
+        // marginLeft: theme.spacing.unit * 3,
+        // marginRight: theme.spacing.unit * 3,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
           width: 400,
           marginLeft: 'auto',
@@ -88,15 +89,6 @@ const styles = theme => ({
     link: {
         textDecoration: 'none',
     },
-
-    glass: {
-        width: '100%',
-        minHeight: '200%',
-        minWidth: '200%',
-    }
-
-
-
   });
   
 
@@ -105,7 +97,6 @@ function Login(props){
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    // const [userId, setUserId] = useState('')
 
     async function loginUser(username, password) {
         let user = {
@@ -126,14 +117,14 @@ function Login(props){
 
     return (
         <>
-        <div className={classes.imgWrap}>
-            <img className={classes.img} src={logo}/>
-        </div>
+
         <main className={classes.main}>
+
             <Paper className={classes.paper}>
-            <Avatar className={classes.avatar}>
-                <img src={glass} alt="" className={classes.glass}/>
-            </Avatar>
+            <div className={classes.imgWrap}>
+                <img className={classes.img} src={logo}/>
+            </div>
+                <br/>
             <form className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email or Username</InputLabel>
@@ -143,6 +134,10 @@ function Login(props){
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input name="password" type="password" id="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} />
                 </FormControl>
+                <br/>
+                <br/>
+                <br/>
+
                 <Button
                     type="submit"
                     fullWidth
@@ -153,7 +148,7 @@ function Login(props){
                 >
                     Sign in
                 </Button>
-                <Link class={classes.link} to={'/register'}>
+                <Link className={classes.link} to={'/register'}>
                 <Button
                     type="submit"
                     fullWidth
