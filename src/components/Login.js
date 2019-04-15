@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+// import styled from 'styled-components'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
@@ -70,12 +71,15 @@ const styles = theme => ({
   
 
 function Login(props){
+
     const { classes } = props;
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    async function loginUser(username, password) {
+    useEffect(() => {})
+    async function loginUser(username, password,e) {
+      e.preventDefault()
         let user = {
             username: username,
             password: password
@@ -117,7 +121,7 @@ function Login(props){
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    onClick={()=>{loginUser(username, password)}}
+                    onClick={(e)=>{loginUser(username, password,e)}}
                 >
                     Sign in
                 </Button>

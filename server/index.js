@@ -36,7 +36,7 @@ app.post(`/login`, ctrl.login) //pull username & password off body
 app.post(`/register`, ctrl.register) //pull username & password off body
 app.post(`/accountcreation`, ctrl.accountCreation) //pull name, bio, profile image, email address off body
 app.put(`/editprofile`, ctrl.updateProfile) //pull user_id from sessions and name, password, bio, profile pic, and email address from body
-app.post(`/surveysubmit`) //pull answer val from body
+app.post(`/surveysubmit`, ctrl.surveySubmit) //pull answer val from body
 app.post(`/logout`, ctrl.logout)
 
 app.get('/api/sign-s3', (req, res) => {
