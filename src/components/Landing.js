@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ProfilePage from './ProfilePage';
+import SurveyPage from './survey/SurveyPage'
+import { PresignedPost } from 'aws-sdk/clients/s3';
 
-
-export default function Landing() {
+export default function Landing(props) {
 
   const [users, setUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -15,6 +15,7 @@ export default function Landing() {
   async function grabUsers() {
     let user = await axios.get(`/landingpage`).then(res => {
       setUsers(res.data)
+      console.log(res.data)
     }
     )
   }
@@ -40,18 +41,18 @@ export default function Landing() {
 
   const mapped = filtered.map(name => {
     return (
-      <div onClick={toProfilePage}>
+      <div onClick={toSurveyPage}>
         {name.profile_pic}
         {name.username}
-        <ProfilePage
+        <SurveyPage
         data={name}
         />
       </div>
     )
   })
 
-  function toProfilePage(){
-
+  function toSurveyPage(props){
+    props.history.push('/surveypage')
   }
 
   return (

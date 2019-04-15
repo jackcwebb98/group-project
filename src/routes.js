@@ -8,10 +8,12 @@ import Registration from './components/Registration';
 import Profile from './components/ProfilePage';
 import Landing from './components/Landing';
 import Signup from './components/Signup';
+import SurveyPage from './components/survey/SurveyPage';
 
 //add routes to each component you make. make the path "/component name"
 export default (
   <Switch>
+    <Route path="/surveypage" component={SurveyPage} />
     <Route path="/profile" component={Profile}/>
     <Route path="/register" component={Registration}/>
     <Route path="/accountcreation" component={AccountCreation}/>
