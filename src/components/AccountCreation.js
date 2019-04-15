@@ -2,38 +2,36 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { v4 as randomString } from 'uuid';
 import Dropzone from 'react-dropzone';
-import { BeatLoader } from 'react-spinners';
-import styled from 'styled-components';
+import { BounceLoader } from 'react-spinners';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
-const TextArea = styled.textarea`
-background: rgb(247,247,247, 0.6);
-border-radius: 10px;
-border: none;
-flexwrap: wrap;
-width: 60vw;
-margin: 10px
-`
-const Div = styled.div`
-display:flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-position:realative;
-`
-const Img = styled.img`
-position: relative;
-top: 15px;
-margin-bottom: 15px;
-`
-const Button = styled.button`
-background: #FC510B;
-border-radius: 10px;
-border: none;
-width: 15vw;
-height: 25px;
-color: #f7f7f7 
-`
 
+const styles = theme => ({
+  card: {
+    width: 345,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  media: {
+    height: 300,
+  },
+  cardWrap: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    // width: '135%',
+  },
+});
 
 class AccountCreation extends Component {
   constructor() {
@@ -72,10 +70,10 @@ class AccountCreation extends Component {
     const options = {
       headers: {
         'Content-Type': file.type,
-      },      
+      },
     };
 
-    
+
 
     axios
       .put(signedRequest, file, options)
@@ -89,7 +87,7 @@ class AccountCreation extends Component {
         if (err.response.status === 403) {
           alert(
             `Your request for a signed url failed with a status 403. Double check the CORS configuration and bucket policy in the README. You also will want to double check your AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your .env and ensure that they are the same as the ones that you created in the IAM dashboard. You may need to generate new keys\n${
-              err.stack
+            err.stack
             }`
           );
         } else {
@@ -111,60 +109,140 @@ class AccountCreation extends Component {
       name: this.state.name
     }
     try {
-      let res = await axios.post('/accountcreation', userInfo )
+      let res = await axios.post('/accountcreation', userInfo)
       this.props.history.push('/landing')
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   }
 
-  render() {
+  render(props) {
+    const { classes } = this.props;
     const { url, isUploading, bio, name } = this.state;
     console.table(this.state)
     return (
-      <Div className="AccountCreation">
-        <Img src={url} alt="Preview of profile"/>
+      <React.Fragment>
+        <Typography variant="h6" gutterBottom>
+          Profile info
+        </Typography>
+        <div className={classes.cardWrap}>
 
-        
+          <Card className={classes.card}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={this.state.url}
+                title="Contemplative Reptile"
+              />
+              <CardContent>
+                <Dropzone
+                  onDropAccepted={this.getSignedRequest}
+                  style={{
+                    position: 'relative',
+                    // width: '60vw',
+                    // height: '20vh',
+                    margin: 10,
+                    border: 'none',
+                    borderColor: 'rgb(102, 102, 102)',
+                    borderRadius: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: 28,
+                    background: 'rgb(247,247,247, 0.6)',
 
-        <Dropzone
-          onDropAccepted={this.getSignedRequest}
-          style={{
-            position: 'relative',
-            width: '60vw',
-            height: '20vh',
-            margin: 10,
-            border: 'none',
-            borderColor: 'rgb(102, 102, 102)',
-            borderRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: 28,
-            background: 'rgb(247,247,247, 0.6)',
-            
-          }}
-          accept="image/*"
-          multiple={false}
-        >
-          {({getRootProps, getInputProps}) => (
-            <section>
-                <div>
-                  {isUploading 
-                  ? 
-                  <BeatLoader style={{}}/> 
-                  :
-                  <p>Drag 'n' drop some files here, or click to select files</p>}
-                </div>
-            </section>
-          )}
-        </Dropzone>
-        <TextArea placeholder="Please enter your bio here" value={bio} onChange={e => this.handleChange('bio', e.target.value)} ></TextArea>
-        <input placeholder="Please enter your first and last name" value={name} onChange={e => this.handleChange('name', e.target.value)} ></input>
-        <Button onClick={this.create}>Submit</Button>
-      </Div>
+                  }}
+                  accept="image/*"
+                  multiple={false}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div>
+                        {isUploading
+                          ?
+                          <BounceLoader style={{}} />
+                          :
+                          <p>Drag 'n' drop some files here, or click to select files</p>}
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </div>
+        <br />
+        <br />
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <TextField
+              required
+              id="Name"
+              name="Name"
+              label="First and last name"
+              fullWidth
+              autoComplete="username"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="bio"
+              name="bio"
+              label="Bio"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+
+      </React.Fragment>
     );
   }
 }
 
-export default AccountCreation;
+AccountCreation.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(AccountCreation);
+
+      // <Div className="AccountCreation">
+      //   <Img src={url} alt="Preview of profile"/>
+
+
+
+      //   <Dropzone
+      //     onDropAccepted={this.getSignedRequest}
+      //     style={{
+      //       position: 'relative',
+      //       width: '60vw',
+      //       height: '20vh',
+      //       margin: 10,
+      //       border: 'none',
+      //       borderColor: 'rgb(102, 102, 102)',
+      //       borderRadius: '10px',
+      //       display: 'flex',
+      //       justifyContent: 'center',
+      //       alignItems: 'center',
+      //       fontSize: 28,
+      //       background: 'rgb(247,247,247, 0.6)',
+
+      //     }}
+      //     accept="image/*"
+      //     multiple={false}
+      //   >
+      //     {({getRootProps, getInputProps}) => (
+      //       <section>
+      //           <div>
+      //             {isUploading 
+      //             ? 
+      //             <BeatLoader style={{}}/> 
+      //             :
+      //             <p>Drag 'n' drop some files here, or click to select files</p>}
+      //           </div>
+      //       </section>
+      //     )}
+      //   </Dropzone>
+      //   <TextArea placeholder="Please enter your bio here" value={bio} onChange={e => this.handleChange('bio', e.target.value)} ></TextArea>
+      //   <input placeholder="Please enter your first and last name" value={name} onChange={e => this.handleChange('name', e.target.value)} ></input>
+      //   <Button onClick={this.create}>Submit</Button>
+      // </Div>

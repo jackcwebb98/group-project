@@ -1,58 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
 import logo from './images/BlackLogo.png';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
-const RegisterPage = styled.div`
-display:flex;
-flex-direction: column;
-height: 100%;
-width: 100%;
-align-items: center;
-`
-const Form = styled.form`
-display: flex;
-flex-direction: column;
-align-items: center;
-`
 
-const InputBox = styled.div`
-display:flex;
-flex-direction: column;
-justify-content:space-evenly;
-align-items: center;
-`
-const Input = styled.input`
-margin: 5px;
-background: rgb(247,247,247, 0.6);
-border-radius: 10px;
-border: none;
-text-align:center;
-width: 20em;
-height: 2em;
-`
-
-const RegisterButton = styled.button`
-margin: 5px;
-background: #FC510B;
-width: 160px;
-border-radius: 10px;
-`
-const ResetButton = styled.button`
-margin: 5px;
-background: #FC510B;
-width: 160px;
-border-radius: 10px;
-`
-
-const LogoImg = styled.img`
-// top: -10vh;
-// right: 15vw;
-// position: absolute;
-height: 450px;
-width: 450px;
-margin:bottom 5px;
-`
 
 export default class Registration extends React.Component {
   state={
@@ -61,8 +14,8 @@ export default class Registration extends React.Component {
     passwordCheck: '',
     email: '',
     emailCheck:'',
-
   }
+  
   // updates state to users input
   handleChange = (prop, val) => {this.setState({[prop]: val})}
 
@@ -122,20 +75,78 @@ export default class Registration extends React.Component {
     render() {
         const {username, email, emailCheck, password, passwordCheck} = this.state
         return (
-            <RegisterPage>
-                <Form onSubmit={this.handleSubmit} >
-                    {/* <LogoImg src={logo}/> */}
-                        <InputBox>
-                            <Input value={username} placeholder='Username' maxLength={30} onChange={e=> this.handleChange("username", e.target.value)}/>
-                            <Input value={email} placeholder='Email' onChange={e=> this.handleChange("email", e.target.value)}/>
-                            <Input value={emailCheck} placeholder='Retype Email' onChange={e=> this.handleChange("emailCheck", e.target.value)}/>
-                            <Input type="password" value={password} placeholder='Password' maxLength={30} onChange={e=> this.handleChange("password", e.target.value)}/>
-                            <Input type="password" value={passwordCheck} placeholder='Retype Password' maxLength={30} onChange={e=> this.handleChange("passwordCheck", e.target.value)}/>
-                        </InputBox>
-                        <RegisterButton>Submit</RegisterButton>
-                </Form>
-                <ResetButton onClick={this.handleResetFields}>Clear Fields</ResetButton>
-            </RegisterPage>
-        )
-    }
-}
+          <React.Fragment>
+          <Typography variant="h6" gutterBottom>
+            Account info
+          </Typography>
+          <Grid container spacing={24}>
+            <Grid item xs={12} >
+              <TextField
+                required
+                id="username"
+                name="username"
+                label="Username"
+                fullWidth
+                autoComplete="username"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="email"
+                name="email"
+                label="E-mail"
+                fullWidth
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="email"
+                name="email"
+                label="Confirm E-mail"
+                fullWidth
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                fullWidth
+                autoComplete="billing address-line2"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="password"
+                name="password"
+                label="Confirm Password"
+                fullWidth
+                autoComplete="password"
+              />
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      );
+    }      
+  }
+            // <RegisterPage>
+            //     <Form onSubmit={this.handleSubmit} >
+            //         {/* <LogoImg src={logo}/> */}
+            //             <InputBox>
+            //                 <Input value={username} placeholder='Username' maxLength={30} onChange={e=> this.handleChange("username", e.target.value)}/>
+            //                 <Input value={email} placeholder='Email' onChange={e=> this.handleChange("email", e.target.value)}/>
+            //                 <Input value={emailCheck} placeholder='Retype Email' onChange={e=> this.handleChange("emailCheck", e.target.value)}/>
+            //                 <Input type="password" value={password} placeholder='Password' maxLength={30} onChange={e=> this.handleChange("password", e.target.value)}/>
+            //                 <Input type="password" value={passwordCheck} placeholder='Retype Password' maxLength={30} onChange={e=> this.handleChange("passwordCheck", e.target.value)}/>
+            //             </InputBox>
+            //             <RegisterButton>Submit</RegisterButton>
+            //     </Form>
+            //     <ResetButton onClick={this.handleResetFields}>Clear Fields</ResetButton>
+            // </RegisterPage>
