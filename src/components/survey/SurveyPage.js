@@ -60,14 +60,13 @@ function SurveyPage(props) {
   };
 
   const submit = async () => {
-    let user_id = 1;
-    let questionee_id = 2;
+    let questionee_id = props.match.params.id ;
     await axios.post(`/surveysubmit`, {
       answerArray,
-      user_id,
       questionee_id,
       date
     });
+    this.history.push('/landing')
   };
 
   const mappedQuestions = surveyQuestions.map((question, id) => {
@@ -79,6 +78,7 @@ function SurveyPage(props) {
   const test = () => {
     submit();
   };
+
 
   return (
     <>
