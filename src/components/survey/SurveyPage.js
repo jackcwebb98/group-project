@@ -8,6 +8,7 @@ const styles = theme => ({});
 function SurveyPage(props) {
   const [surveyQuestions, setSurveyQuestions] = useState([]);
   const [answerArray, setAnswerArray] = useState([]);
+  const [date, setDate] = useState("");
   const [answers, setAnswers] = useState({
     1: 0,
     2: 0,
@@ -19,20 +20,22 @@ function SurveyPage(props) {
     8: 0
   });
 
-  async function getAllQuestions() {
-    let questions = await axios.get(`/surveypage`);
-    setSurveyQuestions(questions.data);
-  }
-
   useEffect(() => {
     getAllQuestions();
+    dateCreator();
   }, []);
 
-  function answerValue(answer, val) {
+  const getAllQuestions = async () => {
+    let questions = await axios.get(`/surveypage`);
+    setSurveyQuestions(questions.data);
+  };
+
+  const answerValue = (answer, val) => {
     let answersCopy = answers;
     answersCopy[answer] = val;
     setAnswers(answersCopy);
-  }
+    objectLoop();
+  };
 
   const objectLoop = () => {
     let answerArrayCopy = [];
@@ -44,7 +47,28 @@ function SurveyPage(props) {
       }
     });
     setAnswerArray(answerArrayCopy);
-  }
+  };
+
+  const dateCreator = () => {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0");
+    let yyyy = today.getFullYear();
+
+    today = mm + "/" + dd + "/" + yyyy;
+    setDate(today);
+  };
+
+  const submit = async () => {
+    let user_id = 1;
+    let questionee_id = 2;
+    await axios.post(`/surveysubmit`, {
+      answerArray,
+      user_id,
+      questionee_id,
+      date
+    });
+  };
 
   const mappedQuestions = surveyQuestions.map((question, id) => {
     return (
@@ -52,11 +76,14 @@ function SurveyPage(props) {
     );
   });
 
-   console.log(answerArray)
+  const test = () => {
+    submit();
+  };
+
   return (
     <>
-      <Button onClick={objectLoop}>click this shit yo</Button>
       <Paper>{mappedQuestions}</Paper>
+      <Button onClick={test}>click this shit yo</Button>
     </>
   );
 }
