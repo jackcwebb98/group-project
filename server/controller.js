@@ -5,7 +5,7 @@ module.exports = {
     const { username, password } = req.body;
     const { session } = req;
     const db = req.app.get("db");
-    
+
     let user = await db.auth.login({ username });
 
     user = user[0];
@@ -25,20 +25,20 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     const { username, password, email } = req.body;
     const { session } = req;
     const db = req.app.get("db");
     let takenUsername = await db.auth.check_username({ username });
     let takenEmail = await db.auth.check_email({ email });
-    takenEmail = +takenEmail[0].count
+    takenEmail = +takenEmail[0].count;
     takenUsername = +takenUsername[0].count;
     try {
       if (takenUsername != 0) {
         return res.send("username");
       }
-      if (takenEmail !=0){
-        return res.status(409).send("email")
+      if (takenEmail != 0) {
+        return res.status(409).send("email");
       }
       let salt = bcrypt.genSaltSync(10);
       let hash = bcrypt.hashSync(password, salt);
@@ -65,13 +65,13 @@ module.exports = {
 
   getProfile: async (req, res) => {
     let { user_id } = req.params;
-    user_id = parseInt(user_id)
+    user_id = parseInt(user_id);
     const db = req.app.get("db");
     try {
-        let profile = await db.profile.get_profile({ user_id });
-        res.status(200).send(profile);
+      let profile = await db.profile.get_profile({ user_id });
+      res.status(200).send(profile);
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
   },
 
@@ -95,7 +95,7 @@ module.exports = {
     const db = req.app.get("db");
     try {
       let allUsers = await db.profile.get_all_users();
-      res.status(200).send(allUsers)
+      res.status(200).send(allUsers);
     } catch (err) {
       console.log(err);
     }
@@ -104,25 +104,49 @@ module.exports = {
   surveyQuestions: async (req, res) => {
     const db = req.app.get("db");
     try {
-        let allQuestions = await db.survey.get_all_questions();
-        res.status(200).send(allQuestions)
+      let allQuestions = await db.survey.get_all_questions();
+      res.status(200).send(allQuestions);
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
   },
 
-  currentUser: async (req, res) =>{
+  currentUser: async (req, res) => {
     setTimeout(() => {
-        const { user } = req.session;
-        if (user) {
-          res.status(200).send(user);
-        } else {
-          res.send('no user')
-        }
-      }, 0);
+      const { user } = req.session;
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.send("no user");
+      }
+    }, 0);
   },
 
   logout: (req, res) => {
-    req.session.destroy(function(){res.sendStatus(200)})
+    req.session.destroy(function() {
+      res.sendStatus(200);
+    });
+  },
+
+  surveySubmit: (req, res) => {
+    const { answerArray, questionee_id, date } = req.body;
+    const {user_id} = req.session.user
+    const db = req.app.get("db");
+
+    for (let i = 0; i <= answerArray.length; i++) {
+      if (answerArray[i]) {
+        Object.keys(answerArray[i]).forEach(key => {
+          let question_id = key;
+          let answer_id = answerArray[i][key];
+          db.survey.survey_submit({
+            question_id,
+            answer_val: answer_id,
+            user_id,
+            questionee_id,
+            date,
+          });
+        });
+      }
+    }
   }
 };
