@@ -40,7 +40,7 @@ export default function Landing() {
 
   const mapped = filtered.map(name => {
     return (
-      <div onClick={toProfilePage}>
+      <div onClick={toProfilePage} className='Search'>
         {name.profile_pic}
         {name.username}
         <ProfilePage
