@@ -41,7 +41,8 @@ class AccountCreation extends Component {
     this.state = {
       isUploading: false,
       url: 'http://via.placeholder.com/450x450',
-      bio: ''
+      bio: '',
+      name: ''
     };
   }
 
@@ -107,6 +108,7 @@ class AccountCreation extends Component {
     let userInfo = {
       bio: this.state.bio,
       profile_pic: this.state.url,
+      name: this.state.name
     }
     try {
       let res = await axios.post('/accountcreation', userInfo )
@@ -117,7 +119,8 @@ class AccountCreation extends Component {
   }
 
   render() {
-    const { url, isUploading, bio } = this.state;
+    const { url, isUploading, bio, name } = this.state;
+    console.table(this.state)
     return (
       <Div className="AccountCreation">
         <Img src={url} alt="Preview of profile"/>
@@ -157,6 +160,7 @@ class AccountCreation extends Component {
           )}
         </Dropzone>
         <TextArea placeholder="Please enter your bio here" value={bio} onChange={e => this.handleChange('bio', e.target.value)} ></TextArea>
+        <input placeholder="Please enter your first and last name" value={name} onChange={e => this.handleChange('name', e.target.value)} ></input>
         <Button onClick={this.create}>Submit</Button>
       </Div>
     );

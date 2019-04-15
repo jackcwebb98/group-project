@@ -124,7 +124,7 @@ export default class Registration extends React.Component {
         return (
             <RegisterPage>
                 <Form onSubmit={this.handleSubmit} >
-                    <LogoImg src={logo}/>
+                    {/* <LogoImg src={logo}/> */}
                         <InputBox>
                             <Input value={username} placeholder='Username' maxLength={30} onChange={e=> this.handleChange("username", e.target.value)}/>
                             <Input value={email} placeholder='Email' onChange={e=> this.handleChange("email", e.target.value)}/>

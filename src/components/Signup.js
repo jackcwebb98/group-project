@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -12,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Registration from './Registration';
 import AccountCreation from './AccountCreation';
+
 
 const styles = theme => ({
   appBar: {
@@ -48,9 +47,12 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Account information', 'Profile information'];
 
 function getStepContent(step) {
   switch (step) {
@@ -66,6 +68,14 @@ function getStepContent(step) {
 class Signup extends React.Component {
   state = {
     activeStep: 0,
+    username: '',
+    password: '',
+    passwordCheck: '',
+    email: '',
+    emailCheck:'',
+    url: 'http://via.placeholder.com/450x450',
+    bio: '',
+    name: '',
   };
 
   handleNext = () => {
@@ -86,20 +96,17 @@ class Signup extends React.Component {
     });
   };
 
-  render() {
+  handleRoute = () => {
+    this.props.history.push('/profile')    
+  }
+
+  render(props) {
     const { classes } = this.props;
     const { activeStep } = this.state;
 
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="absolute" color="default" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              Company name
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">
@@ -107,23 +114,12 @@ class Signup extends React.Component {
             </Typography>
             <Stepper activeStep={activeStep} className={classes.stepper}>
               {steps.map(label => (
-                <Step key={label}>
+                <Step id="test" key={label} className={classes.step}>
                   <StepLabel>{label}</StepLabel>
                 </Step>
               ))}
             </Stepper>
-            <React.Fragment>
-              {activeStep === steps.length ? (
-                <React.Fragment>
-                  <Typography variant="h5" gutterBottom>
-                    Thank you for your order.
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order confirmation, and will
-                    send you an update when your order has shipped.
-                  </Typography>
-                </React.Fragment>
-              ) : (
+
                 <React.Fragment>
                   {getStepContent(activeStep)}
                   <div className={classes.buttons}>
@@ -132,18 +128,20 @@ class Signup extends React.Component {
                         Back
                       </Button>
                     )}
-                    <Button
+                      {activeStep === steps.length - 1 ? <Button
                       variant="contained"
                       color="primary"
                       onClick={this.handleNext}
                       className={classes.button}
-                    >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
+                      > Submit </Button> : 
+                      <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                      className={classes.button}
+                      > Next </Button>}
                   </div>
                 </React.Fragment>
-              )}
-            </React.Fragment>
           </Paper>
         </main>
       </React.Fragment>
