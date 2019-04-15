@@ -1,7 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SurveyPage from './survey/SurveyPage'
-import { PresignedPost } from 'aws-sdk/clients/s3';
+import SearchUser from './survey/SearchUser'
+import {withStyles} from '@material-ui/core'
+import Grid from '@material-ui/core/Grid'
+
+const styles = theme => ({
+  Grid: {
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100px',
+    width: '100px',
+    marginTop: theme.spacing.unit * 2000
+    
+  },
+  search: {
+    marginTop: '200px'
+  }
+})
+
 
 export default function Landing(props) {
 
@@ -15,7 +34,7 @@ export default function Landing(props) {
   async function grabUsers() {
     let user = await axios.get(`/landingpage`).then(res => {
       setUsers(res.data)
-      console.log(res.data)
+      setFiltered(res.data)
     }
     )
   }
@@ -39,29 +58,31 @@ export default function Landing(props) {
     setFiltered(newList);
   }
 
+  console.log(users,22)
+
   const mapped = filtered.map(name => {
     return (
-      <div onClick={toSurveyPage}>
-        {name.profile_pic}
-        {name.username}
-        <SurveyPage
-        data={name}
-        />
-      </div>
+      <SearchUser 
+        key={name.user_id}
+        questionee_id={name.user_id}
+        username={name.username}
+        profile_pic={name.profile_pic}
+      />
     )
   })
 
-  function toSurveyPage(props){
-    props.history.push('/surveypage')
-  }
+
+  
 
   return (
-    //header comes in here
-    <>
-      <input type="text" onChange={filteredSearch} />
-      <div>
+       
+    <div style={{marginTop:'200px'}}>
+      <input className="search" type="text" onChange={filteredSearch} />
+      <div style={{margin: '50px'}}>
         {mapped}
       </div>
-    </>
+    </div>
+    
+
   )
 }

@@ -13,7 +13,7 @@ import SurveyPage from './components/survey/SurveyPage';
 //add routes to each component you make. make the path "/component name"
 export default (
   <Switch>
-    <Route path="/surveypage" component={SurveyPage} />
+    <Route path="/surveypage/:id" component={SurveyPage} />
     <Route path="/profile" component={Profile}/>
     <Route path="/register" component={Registration}/>
     <Route path="/accountcreation" component={AccountCreation}/>
