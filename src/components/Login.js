@@ -1,24 +1,17 @@
 import React, {useState, useEffect} from 'react'
-// import styled from 'styled-components'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-// import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import logo from './images/BlackLogo.png';
-import glass from './images/Logo.png';
-
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const styles = theme => ({
-
     main: {
       width: 'auto',
       display: 'block', // Fix IE 11 issue.
@@ -30,40 +23,23 @@ const styles = theme => ({
         marginRight: 'auto',
       },
     },
-    body: {
-        minWidth: '100%',
-        minHeight: '100%',
-        color: 'red',
-    },
     paper: {
       marginTop: theme.spacing.unit * 8,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-      backgroundColor: theme.palette.secondary.light,
-      marginBottom: theme.spacing.unit * 8,
+    },
 
-    },
-    avatar: {
-      padding: 25,
-      margin: theme.spacing.unit,
-      backgroundColor: theme.palette.primary.main,
-    },
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing.unit,
     },
     submit: {
       marginTop: theme.spacing.unit * 3,
-      backgroundColor: theme.palette.secondary.main,
-      color: theme.palette.primary.dark,
-      '&:hover': {
-          backgroundColor: theme.palette.secondary.hover,
-      }
     },
 
-    imgWrap: {
+        imgWrap: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -85,7 +61,6 @@ const styles = theme => ({
           marginRight: 'auto',
         },
     },
-
     link: {
         textDecoration: 'none',
     },
@@ -118,9 +93,8 @@ function Login(props){
 
     return (
         <>
-
         <main className={classes.main}>
-
+            <CssBaseline />
             <Paper className={classes.paper}>
             <div className={classes.imgWrap}>
                 <img className={classes.img} src={logo}/>
@@ -138,7 +112,6 @@ function Login(props){
                 <br/>
                 <br/>
                 <br/>
-
                 <Button
                     type="submit"
                     fullWidth
@@ -150,7 +123,7 @@ function Login(props){
                     Sign in
                 </Button>
                 
-                <Link className={classes.link} to={'/register'}>
+                <Link className={classes.link} to={'/signup'}>
                 <Button
                     type="submit"
                     fullWidth
