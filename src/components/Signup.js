@@ -72,7 +72,7 @@ class Signup extends React.Component {
     password: '',
     passwordCheck: '',
     email: '',
-    emailCheck:'',
+    emailCheck: '',
     url: 'http://via.placeholder.com/450x450',
     bio: '',
     name: '',
@@ -97,7 +97,7 @@ class Signup extends React.Component {
   };
 
   handleRoute = () => {
-    this.props.history.push('/profile')    
+    this.props.history.push('/profile')
   }
 
   render(props) {
@@ -120,28 +120,28 @@ class Signup extends React.Component {
               ))}
             </Stepper>
 
-                <React.Fragment>
-                  {getStepContent(activeStep)}
-                  <div className={classes.buttons}>
-                    {activeStep !== 0 && (
-                      <Button onClick={this.handleBack} className={classes.button}>
-                        Back
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div className={classes.buttons}>
+                {activeStep !== 0 && (
+                  <Button onClick={this.handleBack} className={classes.button}>
+                    Back
                       </Button>
-                    )}
-                      {activeStep === steps.length - 1 ? <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                      > Submit </Button> : 
-                      <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                      > Next </Button>}
-                  </div>
-                </React.Fragment>
+                )}
+                {activeStep === steps.length - 1 ? <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleNext}
+                  className={classes.button}
+                > Submit </Button> :
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleNext}
+                    className={classes.button}
+                  > Next </Button>}
+              </div>
+            </React.Fragment>
           </Paper>
         </main>
       </React.Fragment>
