@@ -66,7 +66,6 @@ function SurveyPage(props) {
       questionee_id,
       date
     });
-    this.history.push('/landing')
   };
 
   const mappedQuestions = surveyQuestions.map((question, id) => {
@@ -77,6 +76,7 @@ function SurveyPage(props) {
 
   const test = () => {
     submit();
+    props.history.push('/landing')
   };
 
 
