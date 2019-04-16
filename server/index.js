@@ -32,6 +32,8 @@ app.get(`/profile/:user_id`, ctrl.getProfile) //pull user_id from sessions and n
 app.get(`/landingpage`, ctrl.landingPage) //gets all users name profile pic bio and rating
 app.get(`/surveypage`, ctrl.surveyQuestions)
 
+app.get(`/surveyresults`, ctrl.surveyResults)
+
 app.post(`/login`, ctrl.login) //pull username & password off body
 app.post(`/register`, ctrl.register) //pull username & password off body
 app.post(`/accountcreation`, ctrl.accountCreation) //pull name, bio, profile image, email address off body
