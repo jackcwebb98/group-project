@@ -120,6 +120,7 @@ export default class Registration extends React.Component {
 
 
     render() {
+      
         const {username, email, emailCheck, password, passwordCheck} = this.state
         return (
             <RegisterPage>
