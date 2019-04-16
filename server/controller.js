@@ -25,7 +25,6 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    console.log(req.body);
     const { username, password, email } = req.body;
     const { session } = req;
     const db = req.app.get("db");
@@ -84,7 +83,6 @@ module.exports = {
         profile_pic,
         user_id
       });
-      console.log(updatedUser);
       res.status(200).send("profile updated");
     } catch (err) {
       console.log(err);
@@ -130,7 +128,7 @@ module.exports = {
 
   surveySubmit: (req, res) => {
     const { answerArray, questionee_id, date } = req.body;
-    const {user_id} = req.session.user
+    const { user_id } = req.session.user;
     const db = req.app.get("db");
 
     for (let i = 0; i <= answerArray.length; i++) {
@@ -143,10 +141,19 @@ module.exports = {
             answer_val: answer_id,
             user_id,
             questionee_id,
-            date,
+            date
           });
         });
       }
     }
+  },
+
+  surveyResults: async (req, res) => {
+    // const { user_id } = req.session.user;
+    const user_id = 2
+    const db = req.app.get("db");
+    const data = await db.survey.get_survey_results(user_id);
+
+    res.status(200).send(data);
   }
 };
