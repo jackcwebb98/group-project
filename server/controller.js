@@ -149,8 +149,7 @@ module.exports = {
   },
 
   surveyResults: async (req, res) => {
-    // const { user_id } = req.session.user;
-    const user_id = 2
+    const { user_id } = req.session.user;
     const db = req.app.get("db");
     const data = await db.survey.get_survey_results(user_id);
 
