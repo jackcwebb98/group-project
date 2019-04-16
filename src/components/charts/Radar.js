@@ -9,42 +9,42 @@ const styles = theme => {
 };
 
 function RadarChart(props) {
-  const [data, setData] = useState([]);
-  const [chartData, setChartData] = useState([0,0,0,0,0,0,0,0])
+  const [chartData, setChartData] = useState([]);
 
   const chart = {
     labels: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"],
-    datasets: [{
-      data: data
-    }]
+    datasets: [
+      {
+        data: chartData
+      }
+    ]
   };
 
-  useEffect(async () => {
-    await getData();
+  useEffect(() => {
+    getData();
   }, []);
 
   const getData = async () => {
     let res = await axios.get(`/surveyresults`);
-    setData(res.data);
+    mappedData(res.data);
   };
 
-  const test = () => {
-    mappedData();
-  };
-
-  const mappedData = () => {
-    let values = [[],[],[],[],[],[],[],[]]
-    let mappedData = data.map((question, id) => {
-      let {question_id, answer_val} = question
-      console.log(question_id, answer_val)
-
+  const mappedData = async data => {
+    let fakeData = [0, 0, 0, 0, 0, 0, 0, 0];
+    await data.forEach((question, id) => {
+      let realId = question.question_id - 1;
+      fakeData[realId] = question.avg;
     });
+    setChartData(fakeData);
+  };
+
+  const test = async () => {
+    console.log(chartData);
   };
 
   return (
     <>
-      <Button onClick={test}>do the thing</Button>
-      <Radar data={chartData} />
+      <Radar data={chart} />
     </>
   );
 }
