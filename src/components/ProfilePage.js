@@ -9,13 +9,12 @@ export default function Profile(props) {
   const [bio, setBio] = useState("");
 
   async function getUser() {
-    let user_id = 1;
     try {
-      let user = await axios.get(`/profile/${user_id}`);
-      setName(user.data[0].name);
-      setRating(user.data[0].rating);
-      setProfilePic(user.data[0].profile_pic);
-      setBio(user.data[0].bio);
+      let user = await axios.get(`/currentuser`);
+      setName(user.data.name);
+      setRating(user.data.rating);
+      setProfilePic(user.data.profile_pic);
+      setBio(user.data.bio);
     } catch (err) {
       console.log(err);
     }
@@ -25,7 +24,6 @@ export default function Profile(props) {
     checkUser(props);
     getUser();
   });
-
   return (
     <div>
       <p>{name}</p>

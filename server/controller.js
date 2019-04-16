@@ -25,7 +25,6 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    console.log(req.body);
     const { username, password, email } = req.body;
     const { session } = req;
     const db = req.app.get("db");
@@ -84,7 +83,6 @@ module.exports = {
         profile_pic,
         user_id
       });
-      console.log(updatedUser);
       res.status(200).send("profile updated");
     } catch (err) {
       console.log(err);
