@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import checkUser from "../util";
-import RadarChart from './charts/Radar'
+import { checkUser } from "../util";
+import RadarChart from "./charts/Radar";
 
 export default function Profile(props) {
   const [name, setName] = useState("");
