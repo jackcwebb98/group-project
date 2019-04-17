@@ -8,6 +8,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Avatar from '@material-ui/core/Avatar'
+import Consumer from '../RegisterState';
 
 const styles = {
     avatar: {
@@ -41,10 +42,9 @@ const styles = {
 
 
 function NavBar(props) {
+  const [profilePic, setProfilePic] = useState('');
   const {pathname} = props.location
   const {classes} = props
-  const [noticeToggle, setNoticeToggle] = useState(true)
-  const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
     getUser()}) 
@@ -65,17 +65,6 @@ function NavBar(props) {
       props.history.push('/profile')
     }
 
-    // this is for a menu button with popup menu
-
-    // function handleClick(e) {
-    //   setMenuToggle(e.currentTarget)
-    // }
-
-    // function handleClose() {
-    //   setMenuToggle(null)
-    // }
-
-
     if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
         return (
             <AppBar className={classes.AppBar}>
@@ -94,4 +83,10 @@ NavBar.proptypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(NavBar))
+export default withRouter(withStyles(styles)(props => (
+  <Consumer>
+    {RegisterState => {
+      return <NavBar {...props} RegisterState = {RegisterState} />
+    }}
+  </Consumer>
+)))

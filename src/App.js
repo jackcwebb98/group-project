@@ -5,6 +5,7 @@ import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/s
 import routes from './routes'
 import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
+import {RegisterState} from './RegisterState'
 
 class App extends Component {
   
@@ -13,13 +14,15 @@ class App extends Component {
     const theme = createMuiTheme();
 
     return (
-      <HashRouter>
-        <MuiThemeProvider theme={defaultTheme}>
-        <div className="App">{routes}
-          <NavBar location={this.props.location} />
-        </div>
-        </MuiThemeProvider>
-      </HashRouter>
+      <RegisterState>
+        <HashRouter>
+          <MuiThemeProvider theme={defaultTheme}>
+          <div className="App">{routes}
+            <NavBar location={this.props.location} />
+          </div>
+          </MuiThemeProvider>
+        </HashRouter>
+      </RegisterState>
     );
   }
 }

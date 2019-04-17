@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Registration from './Registration';
 import AccountCreation from './AccountCreation';
+import Consumer from './../RegisterState'
 
 
 const styles = theme => ({
@@ -68,14 +69,7 @@ function getStepContent(step) {
 class Signup extends React.Component {
   state = {
     activeStep: 0,
-    username: '',
-    password: '',
-    passwordCheck: '',
-    email: '',
-    emailCheck: '',
-    url: 'http://via.placeholder.com/450x450',
-    bio: '',
-    name: '',
+   
   };
 
   handleNext = () => {
@@ -83,6 +77,8 @@ class Signup extends React.Component {
       activeStep: state.activeStep + 1,
     }));
   };
+
+
 
   handleBack = () => {
     this.setState(state => ({
@@ -96,16 +92,17 @@ class Signup extends React.Component {
     });
   };
 
-  handleRoute = () => {
-    this.props.history.push('/profile')
+  handleSubmitButton = () => {
+    this.props.registerState.handleSubmit()
+    this.props.history.push('/landing')
   }
-
   render(props) {
+    console.log(this.state.activeStep)
     const { classes } = this.props;
     const { activeStep } = this.state;
-
     return (
       <React.Fragment>
+      <div onBeforeunload={() => "You'll loose your data!"} />
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
@@ -131,7 +128,7 @@ class Signup extends React.Component {
                 {activeStep === steps.length - 1 ? <Button
                   variant="contained"
                   color="primary"
-                  onClick={this.handleNext}
+                  onClick={this.handleSubmitButton}
                   className={classes.button}
                 > Submit </Button> :
                   <Button
@@ -153,4 +150,10 @@ Signup.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Signup);
+export default withStyles(styles)(props => (
+  <Consumer>
+    {registerState => {
+      return <Signup {...props} registerState= {registerState}/>
+    }}
+  </Consumer>
+));
