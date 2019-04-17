@@ -48,9 +48,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
   },
-  typography: {
-    useNextVariants: true,
-  },
 });
 
 const steps = ['Account information', 'Profile information'];

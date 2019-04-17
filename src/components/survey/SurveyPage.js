@@ -2,10 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SurveyQuestion from "./SurveyQuestion";
 import { withStyles, Paper, Button } from "@material-ui/core";
+import PropTypes from 'prop-types';
 
-const styles = theme => ({});
+
+const styles = theme => ({
+  button: {
+    marginTop: '90px'
+  },
+  questionContainer: {
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 2 * 2)]: {
+      width: 650,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  laper: {
+  }
+});
 
 function SurveyPage(props) {
+  const { classes } = props;
   const [surveyQuestions, setSurveyQuestions] = useState([]);
   const [answerArray, setAnswerArray] = useState([]);
   const [date, setDate] = useState("");
@@ -82,10 +100,16 @@ function SurveyPage(props) {
 
   return (
     <>
-      <Paper>{mappedQuestions}</Paper>
-      <Button onClick={test}>click this shit yo</Button>
+      <div className={classes.questionContainer}>
+        <Paper className={classes.laper}>{mappedQuestions}</Paper>
+        <Button className={classes.button} onClick={test}>click this shit yo</Button>
+      </div>
     </>
   );
 }
+
+SurveyPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(SurveyPage);
