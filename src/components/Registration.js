@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 
-
 export default class Registration extends React.Component {
   state = {
     username: '',
@@ -129,6 +128,8 @@ export default class Registration extends React.Component {
               label="Confirm Password"
               fullWidth
               autoComplete="password"
+              multiline='true'
+              rows='4'
             />
           </Grid>
         </Grid>

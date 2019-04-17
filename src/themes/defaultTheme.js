@@ -18,11 +18,15 @@ const defaultTheme = createMuiTheme({
       // contrastText: '#ffcc00',
     },
     // error: will use the default color
-    typography: {
-      useNextVariants: true,
-    },
+    // typography: {
+    //   useNextVariants: true,
+    // },
     background: {
       default: '#6AC5F4',
+    },
+    typography: {
+      useNextVariants: true,
+      suppressDeprecationWarnings: true
     }
   },
 });
