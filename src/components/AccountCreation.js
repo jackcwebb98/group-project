@@ -133,7 +133,6 @@ class AccountCreation extends Component {
               <CardMedia
                 className={classes.media}
                 image={this.state.url}
-                title="Contemplative Reptile"
               />
               <CardContent>
                 <Dropzone

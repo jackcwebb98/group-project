@@ -1,15 +1,16 @@
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
-import {withRouter} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
-import {withStyles, MuiThemeProvider} from '@material-ui/core/styles'
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import logoWords from './images/wordsOnlyWhite.png'
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper'
 
 
 const styles = theme => ({
@@ -26,13 +27,17 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
-  Nuke: {
-    backgroundColor: theme.palette.primary.dark
+  Nav: {
+    backgroundColor: theme.palette.primary.dark,
+    position: 'fixed',
   },
   img: {
     width: '150px',
     height: 'auto',
   },
+  toolbar: {
+    margin: '200px'
+  }
 
 
 });
@@ -75,14 +80,14 @@ function NavBar(props) {
     // }
 
 
-    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
+    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !=='/signup' && pathname !== '/profile'){
         return (
           <div className={classes.root}>
             <CssBaseline />
-            <AppBar className={classes.Nuke} position="static">
-              <Toolbar>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                  <Avatar onClick={toProfile} src={profilePic} alt='placeholder for profile icon' variant="raised" className={classes.avatar}/>
+            <AppBar className={classes.Nav}>
+              <Toolbar className={classes.Toolbar}>
+                <IconButton onClick={toProfile} className={classes.menuButton} color="inherit" aria-label="Menu">
+                  <Avatar src={profilePic} alt='placeholder for profile icon' variant="raised" className={classes.avatar}/>
                 </IconButton>
                 <div variant="h6" color="inherit" className={classes.grow}>
                   <img src={logoWords} alt="" className={classes.img}/>
@@ -91,7 +96,6 @@ function NavBar(props) {
               </Toolbar>
             </AppBar>
           </div>
-
         )        
     } else { return ( null )}
 

@@ -5,17 +5,25 @@ import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/s
 import routes from './routes'
 import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 class App extends Component {
   
   render() {
 
-    const theme = createMuiTheme();
+    const theme = createMuiTheme({
+      typography: {
+        useNextVariants: true,
+        suppressDeprecationWarnings: true
+      }
+  });
 
     return (
       <HashRouter>
         <MuiThemeProvider theme={defaultTheme}>
         <div className="App">{routes}
+          <CssBaseline/>
           <NavBar location={this.props.location} />
         </div>
         </MuiThemeProvider>
