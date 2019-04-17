@@ -5,6 +5,7 @@ import { MuiThemeProvider, createMuiTheme, withTheme } from '@material-ui/core/s
 import routes from './routes'
 import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
+import {RegisterState} from './RegisterState'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 
@@ -20,14 +21,15 @@ class App extends Component {
   });
 
     return (
-      <HashRouter>
-        <MuiThemeProvider theme={defaultTheme}>
-        <div className="App">{routes}
-          <CssBaseline/>
-          <NavBar location={this.props.location} />
-        </div>
-        </MuiThemeProvider>
-      </HashRouter>
+      <RegisterState>
+        <HashRouter>
+          <MuiThemeProvider theme={defaultTheme}>
+          <div className="App">{routes}
+            <NavBar location={this.props.location} />
+          </div>
+          </MuiThemeProvider>
+        </HashRouter>
+      </RegisterState>
     );
   }
 }

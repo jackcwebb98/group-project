@@ -25,7 +25,7 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    const { username, password, email } = req.body;
+    const { username, password, email, name, bio, profile_pic } = req.body;
     const { session } = req;
     const db = req.app.get("db");
     let takenUsername = await db.auth.check_username({ username });
@@ -41,25 +41,13 @@ module.exports = {
       }
       let salt = bcrypt.genSaltSync(10);
       let hash = bcrypt.hashSync(password, salt);
-      let user = await db.auth.register({ username, password: hash, email });
+      let user = await db.auth.register({ username, password: hash, email, name, bio, profile_pic });
       user = user[0];
       session.user = user;
-
-      res.status(200).send("register working");
+      res.status(200).send(session.user);
     } catch (err) {
       console.log(err);
     }
-  },
-
-  accountCreation: async (req, res) => {
-    const { profile_pic, bio } = req.body;
-    const { session } = req;
-    const { user_id } = req.session.user;
-    const db = req.app.get("db");
-    let user = await db.auth.accountCreation({ profile_pic, bio, user_id });
-    user = user[0];
-    session.user = user;
-    res.status(200).send("accountCreation working");
   },
 
   getProfile: async (req, res) => {

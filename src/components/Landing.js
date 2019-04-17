@@ -58,7 +58,6 @@ export default function Landing(props) {
     setFiltered(newList);
   }
 
-  console.log(users,22)
 
   const mapped = filtered.map(name => {
     return (

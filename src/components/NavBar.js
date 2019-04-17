@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
+import Consumer from '../RegisterState';
 import Button from '@material-ui/core/Button'
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -45,10 +46,9 @@ const styles = theme => ({
 
 
 function NavBar(props) {
+  const [profilePic, setProfilePic] = useState('');
   const {pathname} = props.location
   const {classes} = props
-  const [noticeToggle, setNoticeToggle] = useState(true)
-  const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
     getUser()}) 
@@ -69,18 +69,7 @@ function NavBar(props) {
       props.history.push('/profile')
     }
 
-    // this is for a menu button with popup menu
-
-    // function handleClick(e) {
-    //   setMenuToggle(e.currentTarget)
-    // }
-
-    // function handleClose() {
-    //   setMenuToggle(null)
-    // }
-
-
-    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !=='/signup' && pathname !== '/profile'){
+    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
         return (
           <div className={classes.root}>
             <CssBaseline />
@@ -106,4 +95,10 @@ NavBar.proptypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(NavBar))
+export default withRouter(withStyles(styles)(props => (
+  <Consumer>
+    {RegisterState => {
+      return <NavBar {...props} RegisterState = {RegisterState} />
+    }}
+  </Consumer>
+)))
