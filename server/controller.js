@@ -154,5 +154,14 @@ module.exports = {
     const data = await db.survey.get_survey_results(user_id);
 
     res.status(200).send(data);
+  },
+
+  lineGraphResults: async (req, res) => {
+    // const { user_id } = req.session.user;
+    const user_id = 2
+    const db = req.app.get("db");
+    const data = await db.survey.line_graph_results(user_id);
+
+    res.status(200).send(data);
   }
 };

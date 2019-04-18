@@ -33,6 +33,7 @@ app.get(`/landingpage`, ctrl.landingPage) //gets all users name profile pic bio 
 app.get(`/surveypage`, ctrl.surveyQuestions)
 
 app.get(`/surveyresults`, ctrl.surveyResults)
+app.get(`/linegraphresults`, ctrl.lineGraphResults)
 
 app.post(`/login`, ctrl.login) //pull username & password off body
 app.post(`/register`, ctrl.register) //pull username & password off body
