@@ -190,6 +190,8 @@ class AccountCreation extends Component {
               name="bio"
               label="Bio"
               fullWidth
+              multiline='true'
+              rows='4'
             />
           </Grid>
         </Grid>
@@ -205,44 +207,3 @@ AccountCreation.propTypes = {
 
 export default withStyles(styles)(AccountCreation);
 
-      // <Div className="AccountCreation">
-      //   <Img src={url} alt="Preview of profile"/>
-
-
-
-      //   <Dropzone
-      //     onDropAccepted={this.getSignedRequest}
-      //     style={{
-      //       position: 'relative',
-      //       width: '60vw',
-      //       height: '20vh',
-      //       margin: 10,
-      //       border: 'none',
-      //       borderColor: 'rgb(102, 102, 102)',
-      //       borderRadius: '10px',
-      //       display: 'flex',
-      //       justifyContent: 'center',
-      //       alignItems: 'center',
-      //       fontSize: 28,
-      //       background: 'rgb(247,247,247, 0.6)',
-
-      //     }}
-      //     accept="image/*"
-      //     multiple={false}
-      //   >
-      //     {({getRootProps, getInputProps}) => (
-      //       <section>
-      //           <div>
-      //             {isUploading 
-      //             ? 
-      //             <BeatLoader style={{}}/> 
-      //             :
-      //             <p>Drag 'n' drop some files here, or click to select files</p>}
-      //           </div>
-      //       </section>
-      //     )}
-      //   </Dropzone>
-      //   <TextArea placeholder="Please enter your bio here" value={bio} onChange={e => this.handleChange('bio', e.target.value)} ></TextArea>
-      //   <input placeholder="Please enter your first and last name" value={name} onChange={e => this.handleChange('name', e.target.value)} ></input>
-      //   <Button onClick={this.create}>Submit</Button>
-      // </Div>
