@@ -7,6 +7,7 @@ import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
 import {RegisterState} from './RegisterState'
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Consumer from './RegisterState'
 
 
 class App extends Component {
@@ -34,4 +35,10 @@ class App extends Component {
   }
 }
 
-export default withTheme()(App);
+export default withTheme()(props => (
+  <Consumer>
+    {RegisterState => {
+      return <App {...props} RegisterState = {RegisterState} />
+    }}
+  </Consumer>
+  ));
