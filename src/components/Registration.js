@@ -72,8 +72,7 @@ class Registration extends React.Component {
               type="password"
               fullWidth
               autoComplete="password"
-              multiline='true'
-              rows='4'
+            
             />
           </Grid>
         </Grid>
