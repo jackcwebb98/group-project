@@ -1,50 +1,54 @@
 import axios from 'axios'
-import React, {useEffect, useState} from 'react'
-import {withRouter} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AppBar from '@material-ui/core/AppBar'
-import {withStyles} from '@material-ui/core/styles'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
+import Consumer from '../RegisterState';
+import Button from '@material-ui/core/Button'
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import logoWords from './images/wordsOnlyWhite.png'
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper'
 
-const styles = {
-    avatar: {
-    },
-    AppBar: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        height: "10%"
-    },
-    notificationBox: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "12%"
-    },
-    
-    menuButton: {
-      color: "red",
-      margin: 5,
-      
-    },
-    notification: {
-      color: "orange",
-    }
-    
-}
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  Nav: {
+    backgroundColor: theme.palette.primary.dark,
+    position: 'fixed',
+  },
+  img: {
+    width: '150px',
+    height: 'auto',
+  },
+  toolbar: {
+    margin: '200px'
+  }
+
+
+});
 
 
 
 function NavBar(props) {
+  const [profilePic, setProfilePic] = useState('');
   const {pathname} = props.location
   const {classes} = props
-  const [noticeToggle, setNoticeToggle] = useState(true)
-  const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
     getUser()}) 
@@ -65,25 +69,22 @@ function NavBar(props) {
       props.history.push('/profile')
     }
 
-    // this is for a menu button with popup menu
-
-    // function handleClick(e) {
-    //   setMenuToggle(e.currentTarget)
-    // }
-
-    // function handleClose() {
-    //   setMenuToggle(null)
-    // }
-
-
     if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
         return (
-            <AppBar className={classes.AppBar}>
-              <div className={classes.notificationBox}>
-                <Avatar onClick={toProfile} src={profilePic} alt='placeholder for profile icon' className={classes.avatar}/>
-              </div>
-              <button onClick={handleLogout} >Logout</button>
+          <div className={classes.root}>
+            <CssBaseline />
+            <AppBar className={classes.Nav}>
+              <Toolbar className={classes.Toolbar}>
+                <IconButton onClick={toProfile} className={classes.menuButton} color="inherit" aria-label="Menu">
+                  <Avatar src={profilePic} alt='placeholder for profile icon' variant="raised" className={classes.avatar}/>
+                </IconButton>
+                <div variant="h6" color="inherit" className={classes.grow}>
+                  <img src={logoWords} alt="" className={classes.img}/>
+                </div>
+                <Button onClick={handleLogout} classes={classes.button} color='secondary' variant="contained">Logout</Button>
+              </Toolbar>
             </AppBar>
+          </div>
         )        
     } else { return ( null )}
 
@@ -94,4 +95,10 @@ NavBar.proptypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withRouter(withStyles(styles)(NavBar))
+export default withRouter(withStyles(styles)(props => (
+  <Consumer>
+    {RegisterState => {
+      return <NavBar {...props} RegisterState = {RegisterState} />
+    }}
+  </Consumer>
+)))
