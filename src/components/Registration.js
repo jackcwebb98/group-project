@@ -69,6 +69,7 @@ class Registration extends React.Component {
               id="password"
               name="password"
               label="Confirm Password"
+              type="password"
               fullWidth
               autoComplete="password"
               multiline='true'

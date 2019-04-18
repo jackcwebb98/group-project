@@ -62,6 +62,7 @@ function NavBar(props) {
     async function getUser() {
       let user = await axios.get('/currentuser')
       const {profile_pic} = user.data
+      console.log(444,profile_pic)
       setProfilePic(profile_pic)
     }
 
