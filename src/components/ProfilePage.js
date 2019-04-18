@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { checkUser } from '../util';
 import RadarChart from "./charts/Radar";
+import LineChart from './charts/Line'
 
 export default function Profile(props) {
   const [name, setName] = useState("");
@@ -27,6 +28,7 @@ export default function Profile(props) {
   });
   return (
     <div>
+      <LineChart />
       <RadarChart />
       <p>{name}</p>
       <p>{rating}</p>
