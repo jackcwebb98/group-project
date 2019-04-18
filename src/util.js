@@ -17,3 +17,4 @@ export function addTogether(num1, num2) {
   let value = num1 + num2
   return value
 }
+
