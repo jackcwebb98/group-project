@@ -12,7 +12,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import profileHolder from './images/ProfileHolder.png'
+import Consumer from './../RegisterState';
 
 
 const styles = theme => ({
@@ -39,14 +39,10 @@ class AccountCreation extends Component {
     super();
     this.state = {
       isUploading: false,
-      url: profileHolder,
-      bio: '',
-      name: ''
     };
   }
 
   getSignedRequest = ([file]) => {
-    console.log(file)
     this.setState({ isUploading: true });
     const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
 
@@ -79,7 +75,8 @@ class AccountCreation extends Component {
     axios
       .put(signedRequest, file, options)
       .then(response => {
-        this.setState({ isUploading: false, url });
+        this.props.registerState.state.url = url
+        this.setState({ isUploading: false });
       })
       .catch(err => {
         this.setState({
@@ -118,9 +115,10 @@ class AccountCreation extends Component {
   }
 
   render(props) {
+    console.log(this.state.isUploading)
+    console.log(this.props.registerState.state.url)
     const { classes } = this.props;
-    const { url, isUploading, bio, name } = this.state;
-    console.table(this.state)
+    const {isUploading } = this.state;
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
@@ -132,7 +130,7 @@ class AccountCreation extends Component {
             <CardActionArea>
               <CardMedia
                 className={classes.media}
-                image={this.state.url}
+                image={this.props.registerState.state.url}
               />
               <CardContent>
                 <Dropzone
@@ -176,6 +174,7 @@ class AccountCreation extends Component {
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <TextField
+              onChange={e => this.props.registerState.handleChange("name", e.target.value)}
               required
               id="Name"
               name="Name"
@@ -186,6 +185,7 @@ class AccountCreation extends Component {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              onChange={e => this.props.registerState.handleChange("bio", e.target.value)}
               id="bio"
               name="bio"
               label="Bio"
@@ -205,5 +205,18 @@ AccountCreation.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AccountCreation);
+export default withStyles(styles)(props => (
+  <Consumer>
+    {registerState => {
+      return <AccountCreation {...props} registerState = {registerState}/>
+    }}
+  </Consumer>
+));
+
+
+
+
+
+
+
 
