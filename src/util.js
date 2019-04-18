@@ -6,3 +6,14 @@ export default async function checkUser(props) {
     props.history.push(`/`)
   }
 }
+
+
+export  function findUser(name, lastName) {
+  let newUser = name + ' ' + lastName
+  return newUser
+}
+
+export function addTogether(num1, num2) {
+  let value = num1 + num2
+  return value
+}
