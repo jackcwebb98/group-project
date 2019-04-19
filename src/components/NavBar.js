@@ -70,7 +70,7 @@ function NavBar(props) {
       props.history.push('/profile')
     }
 
-    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !== '/profile' && pathname !=='/signup'){
+    if (pathname !== '/register' && pathname !=='/' && pathname!=='/accountcreation' && pathname !=='/signup'){
         return (
           <div className={classes.root}>
             <CssBaseline />
