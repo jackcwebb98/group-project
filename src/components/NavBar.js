@@ -81,7 +81,7 @@ function NavBar(props) {
                 <div variant="h6" color="inherit" className={classes.grow}>
                   <img src={logoWords} alt="" className={classes.img}/>
                 </div>
-                <Button onClick={handleLogout} classes={classes.button} color='secondary' variant="contained">Logout</Button>
+                <Button onClick={handleLogout} classes={classes.button} color='inherit'>Logout</Button>
               </Toolbar>
             </AppBar>
           </div>

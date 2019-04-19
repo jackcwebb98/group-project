@@ -102,7 +102,7 @@ function SurveyPage(props) {
     <>
       <div className={classes.questionContainer}>
         <Paper className={classes.laper}>{mappedQuestions}</Paper>
-        <Button className={classes.button} onClick={test}>click this shit yo</Button>
+        <Button className={classes.button} onClick={test}>Submit</Button>
       </div>
     </>
   );
