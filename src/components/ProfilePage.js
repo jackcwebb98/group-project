@@ -17,9 +17,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Consumer from "../RegisterState";
-import LineChart from "./charts/Line";
 import EditCard from "./EditProfile";
-import { Button } from "@material-ui/core";
 
 
 const styles = theme => ({
@@ -95,7 +93,7 @@ function Profile(props) {
   };
 
   const updateUser = async () => {
-    let user = {name, bio, profile_pic: profilePic};
+    let user = { name, bio, profile_pic: profilePic };
     let res = await axios.put(`/editprofile`, user)
     console.log(res)
 
@@ -103,8 +101,8 @@ function Profile(props) {
 
   console.log(name)
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap',}}>
-      <div style={{width: '40%'}}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', }}>
+      <div style={{ width: '40%' }}>
         <LineChart />
         <RadarChart />
       </div>
@@ -140,25 +138,26 @@ function Profile(props) {
           </Grid>
         </Grid>
       </div>
-    <div>
-      <EditCard
-        bio={bio}
-        profilePic={profilePic}
-        setName={setName}
-        name={name}
-        setBio={setBio}
-        setProfilePic={setProfilePic}
-        dialogOpen={dialogOpen}
-        handleDialogOpen={handleDialogOpen}
-        updateUser={updateUser}
-      />
-      <LineChart />
-      <RadarChart />
-      <Button onClick={handleDialogOpen}>Click</Button>
-      <p>{name}</p>
-      <p>{rating}</p>
-      <p>{bio}</p>
-      <img src={profilePic} alt={name} />
+      <div>
+        <EditCard
+          bio={bio}
+          profilePic={profilePic}
+          setName={setName}
+          name={name}
+          setBio={setBio}
+          setProfilePic={setProfilePic}
+          dialogOpen={dialogOpen}
+          handleDialogOpen={handleDialogOpen}
+          updateUser={updateUser}
+        />
+        <LineChart />
+        <RadarChart />
+        <Button onClick={handleDialogOpen}>Click</Button>
+        <p>{name}</p>
+        <p>{rating}</p>
+        <p>{bio}</p>
+        <img src={profilePic} alt={name} />
+      </div>
     </div>
   );
 }
