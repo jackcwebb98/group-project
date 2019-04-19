@@ -66,6 +66,7 @@ export default function Landing(props) {
         questionee_id={name.user_id}
         username={name.username}
         profile_pic={name.profile_pic}
+        bio={name.bio}
       />
     )
   })
