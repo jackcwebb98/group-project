@@ -23,7 +23,7 @@ import EditCard from "./EditProfile";
 const styles = theme => ({
   card: {
 
-    width: '400px',
+    width: '60%',
     objectFit: 'cover',
     minHeight: '700px',
     minWidth: '100%',
@@ -31,7 +31,7 @@ const styles = theme => ({
     // marginLeft: theme.spacing.unit * 3,
     // marginRight: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: '50%',
       marginLeft: 'auto',
       marginRight: 'auto',
     },
@@ -56,6 +56,15 @@ const styles = theme => ({
     marginTop: '25px',
     paddingLeft: '15px',
     paddingRight: '15px'
+  },
+  chart: {
+    display: 'flex',
+    width: '80%',
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: '45%',
+      height: 'auto',
+      padding: '25px'
+    },
   }
 })
 
@@ -66,6 +75,7 @@ function Profile(props) {
   const [rating, setRating] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [bio, setBio] = useState("");
+  const [username, setUsername] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
   async function getUser() {
@@ -75,6 +85,7 @@ function Profile(props) {
       setRating(user.data.rating);
       setProfilePic(user.data.profile_pic);
       setBio(user.data.bio);
+      setUsername(user.data.username);
     } catch (err) {
       console.log(err);
     }
@@ -93,7 +104,7 @@ function Profile(props) {
   };
 
   const updateUser = async () => {
-    let user = { name, bio, profile_pic: profilePic };
+    let user = { name, bio, profile_pic: profilePic, username };
     let res = await axios.put(`/editprofile`, user)
     console.log(res)
 
@@ -101,61 +112,62 @@ function Profile(props) {
 
   console.log(name)
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '75px'}}>
-      <div style={{ padding: 5, }}>
-        <Grid container spacing={40} className={classes.cardGrid}>
-          <Grid item xs={10} md={6}>
-            <Card className={classes.card}>
-              <div className={classes.wrap}>
-                <div>
-                  <div style={{ width: '100%' }}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={profilePic} // eslint-disable-line max-len
-                      title="Image title"
-                    />
-                  </div>
-                </div>
-                <div className={classes.cardDetails}>
-                  <CardContent>
-                    <h2>{name}</h2>
-                    <p>{rating}</p>
-                    <p>{bio}</p>
-                    <Button
-                      onClick={handleDialogOpen}
-                      variant="contained"
-                      color="primary"
-                      className={classes.button}
-                    > Edit Profile
+    <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '75px', marginRight: '3%', marginLeft: '3%', marginBottom: '2%' }}>
+      <Card className={classes.card}>
+        <div className={classes.wrap}>
+          <div>
+            <div style={{ width: '100%' }}>
+              <CardMedia
+                className={classes.cardMedia}
+                image={profilePic} // eslint-disable-line max-len
+                title="Image title"
+              />
+            </div>
+          </div>
+          <div className={classes.cardDetails}>
+            <CardContent>
+              <h2>{name},</h2>
+              <h2>{username}</h2>
+              <p>{rating}</p>
+              <p>{bio}</p>
+              <Button
+                onClick={handleDialogOpen}
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              > Edit Profile
                     </Button>
-                  </CardContent>
-                </div>
+            </CardContent>
+          </div>
+        </div>
+        <div>
+          <Card >
+            <EditCard
+              bio={bio}
+              profilePic={profilePic}
+              setName={setName}
+              name={name}
+              setBio={setBio}
+              setProfilePic={setProfilePic}
+              dialogOpen={dialogOpen}
+              handleDialogOpen={handleDialogOpen}
+              updateUser={updateUser}
+            />
+            <div  style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', justifyItems: 'center'}}>
+              <div className={classes.chart}>
+                <LineChart />
               </div>
-            </Card>
-          </Grid>
-        </Grid>
-      </div>
-      <div>
-      <Card className={classes.chart}>
-        <EditCard
-          bio={bio}
-          profilePic={profilePic}
-          setName={setName}
-          name={name}
-          setBio={setBio}
-          setProfilePic={setProfilePic}
-          dialogOpen={dialogOpen}
-          handleDialogOpen={handleDialogOpen}
-          updateUser={updateUser}
-        />
-        <LineChart />
-        <RadarChart />
-        <p>{name}</p>
-        <p>{rating}</p>
-        <p>{bio}</p>
-        <img src={profilePic} alt={name} />
-        </Card>
-      </div>
+              <div className={classes.chart}>
+                <RadarChart />
+              </div>
+            </div>
+            <p>{name}</p>
+            <p>{rating}</p>
+            <p>{bio}</p>
+            <img src={profilePic} alt={name} />
+          </Card>
+        </div>
+      </Card>
     </div>
   );
 }
