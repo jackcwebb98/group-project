@@ -68,6 +68,7 @@ function Landing(props) {
   useEffect(() => {
     grabUsers();
   }, []);
+  
 
   async function grabUsers() {
     let user = await axios.get(`/landingpage`).then(res => {

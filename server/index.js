@@ -5,9 +5,14 @@ const session = require('express-session');
 const aws = require('aws-sdk');
 const ctrl = require('./controller')
 const app = express();
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
 
 
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
+
+app.use(express.static(`${__dirname}/../build`))
 
 app.use(express.json());
 app.use(
@@ -26,8 +31,6 @@ massive(CONNECTION_STRING).then(db => {
 });
 
 // const io = socket(app.listen(SERVER_PORT, () => console.log(`listening on server ${SERVER_PORT}`)))
-const server = require('http').createServer(app)
-const io = require('socket.io')(server)
 
 
 
@@ -47,14 +50,15 @@ app.post(`/logout`, ctrl.logout)
 
 server.listen(SERVER_PORT)
 io.on('connection', function(socket){
+
   socket.on('joinRoom', function(roomName){
     console.log(roomName,'roomname join')
     socket.join(roomName)
   })
 
-  // socket.on('leaveRoom', function(roomName){
-  //   socket.leave(roomName)
-  // })
+  socket.on('leaveRoom', function(roomName){
+    socket.leave(roomName)
+  })
 
   socket.on('sendMsg',(data)=>{
     console.log(data,'sendMsg data')
