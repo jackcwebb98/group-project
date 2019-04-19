@@ -58,6 +58,7 @@ const styles = theme => ({
     paddingRight: '15px'
   },
   chart: {
+    margin: '15px',
     display: 'flex',
     width: '80%',
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -161,10 +162,7 @@ function Profile(props) {
                 <RadarChart />
               </div>
             </div>
-            <p>{name}</p>
-            <p>{rating}</p>
-            <p>{bio}</p>
-            <img src={profilePic} alt={name} />
+
           </Card>
         </div>
       </Card>
