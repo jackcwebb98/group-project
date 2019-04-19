@@ -18,6 +18,8 @@ function LineChart(props) {
 
   const getData = async () => {
     let res = await axios.get(`/linegraphresults`);
+    console.log(res.data)
+    
     stringCutter(res.data);
   };
 
@@ -26,6 +28,7 @@ function LineChart(props) {
     let labelClone = [...labelData]
     await data.forEach((question, id) => {
       let date = question.date.substring(0,10);
+      console.log(date)
       let avg = question.avg
       chartClone.push(avg)
       labelClone.push(date)
@@ -33,6 +36,11 @@ function LineChart(props) {
     setChartData(chartClone)
     setLabelData(labelClone)
   };
+
+
+ 
+
+
 
   const data = {
     labels: labelData,

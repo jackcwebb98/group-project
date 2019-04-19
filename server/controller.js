@@ -41,7 +41,14 @@ module.exports = {
       }
       let salt = bcrypt.genSaltSync(10);
       let hash = bcrypt.hashSync(password, salt);
-      let user = await db.auth.register({ username, password: hash, email, name, bio, profile_pic });
+      let user = await db.auth.register({
+        username,
+        password: hash,
+        email,
+        name,
+        bio,
+        profile_pic
+      });
       user = user[0];
       session.user = user;
       res.status(200).send(session.user);
@@ -65,10 +72,12 @@ module.exports = {
   updateProfile: async (req, res) => {
     const { user_id } = req.session.user;
     const db = req.app.get("db");
-    const { profile_pic } = req.body;
+    const { profile_pic, name, bio } = req.body;
     try {
-      let updatedUser = await db.profile.update_profile({
+      await db.profile.update_profile({
         profile_pic,
+        bio,
+        name,
         user_id
       });
       res.status(200).send("profile updated");
@@ -98,10 +107,15 @@ module.exports = {
   },
 
   currentUser: async (req, res) => {
-    setTimeout(() => {
-      const { user } = req.session;
+    const db = req.app.get("db");
+    const { user } = req.session;
+    const { session } = req;
+
+    setTimeout(async () => {
       if (user) {
-        res.status(200).send(user);
+        let newUser = await db.auth.get_user(user.user_id);
+        session.user = newUser[0];
+        res.status(200).send(newUser[0]);
       } else {
         res.send("no user");
       }
@@ -145,10 +159,11 @@ module.exports = {
   },
 
   lineGraphResults: async (req, res) => {
-    // const { user_id } = req.session.user;
-    const user_id = 2
+    const { user_id } = req.session.user;
     const db = req.app.get("db");
+    
     const data = await db.survey.line_graph_results(user_id);
+    console.log(req.session.user)
 
     res.status(200).send(data);
   }
