@@ -161,7 +161,6 @@ module.exports = {
   lineGraphResults: async (req, res) => {
     const { user_id } = req.session.user;
     const db = req.app.get("db");
-    const { user_id } = req.session.user;
     
     const data = await db.survey.line_graph_results(user_id);
     console.log(req.session.user)
