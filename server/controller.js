@@ -160,7 +160,6 @@ module.exports = {
 
   lineGraphResults: async (req, res) => {
     const { user_id } = req.session.user;
-    const user_id = 2;
     const db = req.app.get("db");
     const { user_id } = req.session.user;
     
