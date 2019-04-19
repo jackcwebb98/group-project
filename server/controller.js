@@ -107,19 +107,22 @@ module.exports = {
   },
 
   currentUser: async (req, res) => {
-    const db = req.app.get("db");
-    const { user } = req.session;
-    const { session } = req;
-
-    setTimeout(async () => {
+    try{
+      const db = req.app.get("db");
+      const { user } = req.session;
+      const { session } = req;
+  
       if (user) {
-        let newUser = await db.auth.get_user(user.user_id);
+        let newUser = await db.auth.get_user({user_id: user.user_id});
         session.user = newUser[0];
+        console.log(newUser[0])
         res.status(200).send(newUser[0]);
       } else {
         res.send("no user");
       }
-    }, 0);
+    } catch(err){
+      console.log("sooooooo", err)
+    }
   },
 
   logout: (req, res) => {
