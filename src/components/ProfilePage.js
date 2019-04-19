@@ -48,7 +48,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row'
   },
-  test: {
+  wrap: {
     display: 'flex',
     flexDirection: 'column'
   },
@@ -101,16 +101,12 @@ function Profile(props) {
 
   console.log(name)
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', }}>
-      <div style={{ width: '40%' }}>
-        <LineChart />
-        <RadarChart />
-      </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '75px'}}>
       <div style={{ padding: 5, }}>
         <Grid container spacing={40} className={classes.cardGrid}>
           <Grid item xs={10} md={6}>
             <Card className={classes.card}>
-              <div className={classes.test}>
+              <div className={classes.wrap}>
                 <div>
                   <div style={{ width: '100%' }}>
                     <CardMedia
@@ -126,10 +122,11 @@ function Profile(props) {
                     <p>{rating}</p>
                     <p>{bio}</p>
                     <Button
+                      onClick={handleDialogOpen}
                       variant="contained"
                       color="primary"
                       className={classes.button}
-                    > Take Survey
+                    > Edit Profile
                     </Button>
                   </CardContent>
                 </div>
@@ -139,6 +136,7 @@ function Profile(props) {
         </Grid>
       </div>
       <div>
+      <Card className={classes.chart}>
         <EditCard
           bio={bio}
           profilePic={profilePic}
@@ -152,11 +150,11 @@ function Profile(props) {
         />
         <LineChart />
         <RadarChart />
-        <Button onClick={handleDialogOpen}>Click</Button>
         <p>{name}</p>
         <p>{rating}</p>
         <p>{bio}</p>
         <img src={profilePic} alt={name} />
+        </Card>
       </div>
     </div>
   );
