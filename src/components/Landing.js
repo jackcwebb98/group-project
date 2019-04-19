@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SurveyPage from './survey/SurveyPage'
 import SearchUser from './survey/SearchUser'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid'
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';

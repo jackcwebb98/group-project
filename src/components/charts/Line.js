@@ -72,7 +72,6 @@ function LineChart(props) {
 
   return (
     <>
-    <Button onClick={test}>test</Button>
       <Line data={data} options={options} />
     </>
   );

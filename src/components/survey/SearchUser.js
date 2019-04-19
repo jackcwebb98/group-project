@@ -14,9 +14,9 @@ import Button from '@material-ui/core/Button';
 const styles = theme => ({
   card: {
 
-    width: '90vw',
+    width: '400px',
     objectFit: 'cover',
-    minHeight: '100%',
+    minHeight: '700px',
     minWidth: '100%',
     display: 'block', // Fix IE 11 issue.
     // marginLeft: theme.spacing.unit * 3,
@@ -28,8 +28,9 @@ const styles = theme => ({
     },
   },
   cardMedia: {
-    height: '150px',
-    width: '150px'
+    objectFit: 'scale-down',
+    height: '450px',
+    width: '400px',
   },
   link: {
     textDecoration: 'none',
@@ -40,9 +41,10 @@ const styles = theme => ({
   },
   test: {
     display: 'flex',
+    flexDirection: 'column'
   },
   button: {
-    margin: '15px',
+    marginTop: '25px',
     paddingLeft: '15px',
     paddingRight: '15px'
   }
@@ -60,11 +62,18 @@ function SearchUser(props) {
             <Card className={classes.card}>
               <div className={classes.test}>
                 <div>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={profile_pic} // eslint-disable-line max-len
-                    title="Image title"
-                  />
+                  <div style={{width: '100%'}}>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={profile_pic} // eslint-disable-line max-len
+                      title="Image title"
+                    />
+                  </div>
+                </div>
+                <div className={classes.cardDetails}>
+                  <CardContent>
+                    <h2>{username}</h2>
+                    <p>{bio}</p>
                   <Link to={`/surveypage/${id}`} className={classes.link}>
                     <Button
                       variant="contained"
@@ -73,11 +82,6 @@ function SearchUser(props) {
                     > Take Survey
                   </Button>
                   </Link>
-                </div>
-                <div className={classes.cardDetails}>
-                  <CardContent>
-                    <div>{username}</div>
-                    <div>{bio}</div>
                   </CardContent>
                 </div>
               </div>

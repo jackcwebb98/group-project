@@ -17,20 +17,19 @@ import Consumer from './../RegisterState';
 
 const styles = theme => ({
   card: {
-    width: 345,
+    width: 400,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   media: {
-    height: 300,
+    height: 400,
   },
   cardWrap: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    // width: '135%',
   },
 });
 
@@ -140,14 +139,14 @@ class AccountCreation extends Component {
                     // width: '60vw',
                     // height: '20vh',
                     margin: 10,
-                    border: 'none',
-                    borderColor: 'rgb(102, 102, 102)',
+                    border: 'dashed 1px',
+                    borderColor: 'rgb(102, 102, 102, 0.4)',
                     borderRadius: '10px',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     fontSize: 28,
-                    background: 'rgb(247,247,247, 0.6)',
+                    background: 'rgb(247,247,247, 0.7)',
 
                   }}
                   accept="image/*"
@@ -160,11 +159,12 @@ class AccountCreation extends Component {
                           ?
                           <BounceLoader style={{}} />
                           :
-                          <p>Drag 'n' drop some files here, or click to select files</p>}
+                          <p style={{margin: '25px', display: 'flex', alignSelf: 'center'}}>Drag 'n' drop some files here, or click to select files</p>}
                       </div>
                     </section>
                   )}
                 </Dropzone>
+
               </CardContent>
             </CardActionArea>
           </Card>
