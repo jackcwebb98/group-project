@@ -12,13 +12,32 @@ function RadarChart(props) {
   const [chartData, setChartData] = useState([]);
 
   const chart = {
-    labels: ["Planning", "First Impression", "Manners", "Hygiene", "Presentation", "Confidence", "Converstation", "Punctuality"],
+    labels: [
+      "Planning",
+      "First Impression",
+      "Manners",
+      "Hygiene",
+      "Presentation",
+      "Confidence",
+      "Converstation",
+      "Punctuality"
+    ],
     datasets: [
       {
-        label: 'Avg Survey Results',
-        data: chartData,
+        label: "Avg Survey Results",
+        data: chartData
       }
     ]
+  };
+
+  const options = {
+    scale: {
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        max: 10
+      }
+    }
   };
 
   useEffect(() => {
@@ -45,7 +64,7 @@ function RadarChart(props) {
 
   return (
     <>
-      <Radar data={chart} />
+      <Radar data={chart} options={options} />
     </>
   );
 }
