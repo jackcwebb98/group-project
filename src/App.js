@@ -6,8 +6,8 @@ import routes from './routes'
 import NavBar from './components/NavBar'
 import defaultTheme from './themes/defaultTheme'
 import {RegisterState} from './RegisterState'
+import {UserState} from './UserState'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Consumer from './RegisterState'
 
 
 class App extends Component {
@@ -22,23 +22,22 @@ class App extends Component {
   });
 
     return (
-      <RegisterState>
-        <HashRouter>
-          <MuiThemeProvider theme={defaultTheme}>
-          <div className="App">{routes}
-            <NavBar location={this.props.location} />
-          </div>
-          </MuiThemeProvider>
-        </HashRouter>
-      </RegisterState>
+      <UserState>
+        <RegisterState>
+          <HashRouter>
+            <MuiThemeProvider theme={defaultTheme}>
+            <div className="App">{routes}
+            <CssBaseline />
+              <NavBar location={this.props.location} />
+            </div>
+            </MuiThemeProvider>
+          </HashRouter>
+        </RegisterState>
+      </UserState>
     );
   }
 }
 
-export default withTheme()(props => (
-  <Consumer>
-    {RegisterState => {
-      return <App {...props} RegisterState = {RegisterState} />
-    }}
-  </Consumer>
-  ));
+export default withTheme(defaultTheme)(props => (
+  <App {...props} />
+));

@@ -16,6 +16,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import Consumer from "../RegisterState";
 import EditCard from "./EditProfile";
 
@@ -93,8 +94,8 @@ function Profile(props) {
   }
 
   useEffect(() => {
-    checkUser(props);
-  });
+    checkUser(props);    
+  },);
 
   useEffect(() => {
     getUser();
@@ -142,7 +143,8 @@ function Profile(props) {
           </div>
         </div>
         <div>
-          <Card >
+          <Card style={{overflow: 'hidden'}}>
+            <Paper style = {{width: '400px',  overflow: 'hidden !important !important !important' }}>
             <EditCard
               bio={bio}
               profilePic={profilePic}
@@ -153,7 +155,10 @@ function Profile(props) {
               dialogOpen={dialogOpen}
               handleDialogOpen={handleDialogOpen}
               updateUser={updateUser}
+              style={{width: '400px'}}
             />
+            </Paper>
+
             <div  style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', justifyItems: 'center'}}>
               <div className={classes.chart}>
                 <LineChart />

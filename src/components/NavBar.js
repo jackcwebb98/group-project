@@ -11,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import logoWords from './images/wordsOnlyWhite.png'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper'
 
 
 const styles = theme => ({

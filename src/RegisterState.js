@@ -84,7 +84,7 @@ class RegisterState extends Component {
 
 
  render() {
-   console.log(this.state)
+   console.log(this.state, 'state for register')
    return (
      <Provider
        value={{
