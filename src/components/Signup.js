@@ -1,31 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Registration from './Registration';
-import AccountCreation from './AccountCreation';
-import Consumer from './../RegisterState'
-
+import React from "react";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Registration from "./Registration";
+import AccountCreation from "./AccountCreation";
+import Consumer from "./../RegisterState";
 
 const styles = theme => ({
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
       width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
   },
   paper: {
     marginTop: theme.spacing.unit * 3,
@@ -34,23 +33,23 @@ const styles = theme => ({
     [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
       marginTop: theme.spacing.unit * 6,
       marginBottom: theme.spacing.unit * 6,
-      padding: theme.spacing.unit * 3,
-    },
+      padding: theme.spacing.unit * 3
+    }
   },
   stepper: {
-    padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
+    padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: "flex",
+    justifyContent: "flex-end"
   },
   button: {
     marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit,
-  },
+    marginLeft: theme.spacing.unit
+  }
 });
 
-const steps = ['Account information', 'Profile information'];
+const steps = ["Account information", "Profile information"];
 
 function getStepContent(step) {
   switch (step) {
@@ -59,47 +58,48 @@ function getStepContent(step) {
     case 1:
       return <AccountCreation />;
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step");
   }
 }
 
 class Signup extends React.Component {
   state = {
-    activeStep: 0,
-   
+    activeStep: 0
   };
 
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
+    if (this.props.registerState.validate1()) {
+      this.setState(state => ({
+        activeStep: state.activeStep + 1
+      }));
+    }
   };
-
-
 
   handleBack = () => {
     this.setState(state => ({
-      activeStep: state.activeStep - 1,
+      activeStep: state.activeStep - 1
     }));
   };
 
   handleReset = () => {
     this.setState({
-      activeStep: 0,
+      activeStep: 0
     });
   };
 
   handleSubmitButton = () => {
-    this.props.registerState.handleSubmit()
-    this.props.history.push('/landing')
-  }
+    if (this.props.registerState.validate2()) {
+      this.props.registerState.handleSubmit();
+      this.props.history.push("/landing");
+    }
+  };
   render(props) {
-    console.log(this.state.activeStep)
+    console.log(this.state.activeStep);
     const { classes } = this.props;
     const { activeStep } = this.state;
     return (
       <React.Fragment>
-      <div onBeforeunload={() => "You'll loose your data!"} />
+        <div onBeforeunload={() => "You'll loose your data!"} />
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
@@ -120,20 +120,29 @@ class Signup extends React.Component {
                 {activeStep !== 0 && (
                   <Button onClick={this.handleBack} className={classes.button}>
                     Back
-                      </Button>
+                  </Button>
                 )}
-                {activeStep === steps.length - 1 ? <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleSubmitButton}
-                  className={classes.button}
-                > Submit </Button> :
+                {activeStep === steps.length - 1 ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleSubmitButton}
+                    className={classes.button}
+                  >
+                    {" "}
+                    Submit{" "}
+                  </Button>
+                ) : (
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={this.handleNext}
                     className={classes.button}
-                  > Next </Button>}
+                  >
+                    {" "}
+                    Next{" "}
+                  </Button>
+                )}
               </div>
             </React.Fragment>
           </Paper>
@@ -144,13 +153,13 @@ class Signup extends React.Component {
 }
 
 Signup.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(props => (
   <Consumer>
     {registerState => {
-      return <Signup {...props} registerState= {registerState}/>
+      return <Signup {...props} registerState={registerState} />;
     }}
   </Consumer>
 ));
