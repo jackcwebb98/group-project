@@ -77,7 +77,7 @@ function EditCard(props) {
 export default (props => (
   <Consumer>
     {registerState => {
-      return <EditCard {...props} registerState={registerState} update={registerState.update}/>
+      return <EditCard {...props} registerState={registerState} update={registerState.update} />
     }}
   </Consumer>
 ))

@@ -180,8 +180,8 @@ class RegisterState extends Component {
       } catch (err) {
         console.log(err);
       }
+      this.handleEditSubmit()
     }
-    this.handleEditSubmit()
   };
 
 
@@ -194,6 +194,7 @@ class RegisterState extends Component {
           state: this.state,
           handleChange: this.handleChange,
           handleSubmit: this.handleSubmit,
+          handleEditSubmit: this.handleEditSubmit,
           setUrl: this.setUrl,
           update: this.update,
           validate1: this.validate1,

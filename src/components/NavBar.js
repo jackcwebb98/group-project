@@ -57,6 +57,7 @@ function NavBar(props) {
       await axios.post('/logout')
       setProfilePic('')
       props.history.push('/')
+      props.handleEditSubmit()
     }
 
     async function getUser() {
@@ -98,7 +99,7 @@ NavBar.proptypes = {
 export default withRouter(withStyles(styles)(props => (
   <Consumer>
     {registerState => {
-      return <NavBar {...props} registerState={registerState} url={registerState.url}/>
+      return <NavBar {...props} registerState={registerState} url={registerState.url} handleEditSubmit={registerState.handleEditSubmit}/>
     }}
   </Consumer>
 )))
