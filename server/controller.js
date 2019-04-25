@@ -113,6 +113,7 @@ module.exports = {
       const { session } = req;
   
       if (user) {
+        console.log(user)
         let newUser = await db.auth.get_user({user_id: user.user_id});
         session.user = newUser[0];
         console.log(newUser[0])
@@ -166,7 +167,7 @@ module.exports = {
     const db = req.app.get("db");
     
     const data = await db.survey.line_graph_results(user_id);
-    console.log(req.session.user)
+    // console.log(req.session.user)
 
     res.status(200).send(data);
   }
