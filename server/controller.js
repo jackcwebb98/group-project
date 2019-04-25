@@ -129,6 +129,7 @@ module.exports = {
     req.session.destroy(function() {
       res.sendStatus(200);
     });
+    
   },
 
   surveySubmit: (req, res) => {

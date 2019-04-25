@@ -1,7 +1,7 @@
 import React, { Component, createContext } from "react";
-import profileHolder from './components/images/ProfileHolder.png'
+import profileHolder from "./components/images/ProfileHolder.png";
 
-import axios from 'axios'
+import axios from "axios";
 import { setTimeout } from "timers";
 
 // Provider and Consumer are connected through their "parent" context
@@ -9,68 +9,149 @@ const { Provider, Consumer } = createContext();
 
 // Then create a provider Component
 class RegisterState extends Component {
- constructor(props){
-   super(props)
+  constructor(props) {
+    super(props);
 
-   this.state = {
-    username: '',
-    password: '',
-    passwordCheck: '',
-    email: '',
-    emailCheck: '',
-    name:'',
-    bio:'',
-    url: profileHolder,    
-   }
- }
+    this.state = {
+      username: "",
+      password: "",
+      passwordCheck: "",
+      email: "",
+      emailCheck: "",
+      name: "",
+      bio: "",
+      url: profileHolder,
+      error: {
+        username: false,
+        email: false,
+        emailConfirm: false,
+        password: false,
+        confirmPassword: false,
+        name: false,
+        bio: false
+      }
+    };
+  }
 
- update = () => {
-   this.forceUpdate()
- }
+  validate1 = () => {
+    const {
+      username,
+      password,
+      email,
+      emailCheck,
+      passwordCheck,
+      error
+    } = this.state;
+    let hasError = false;
+    if (!username) {
+      error.username = hasError = true;
+    }
+    if (!password) {
+      error.password = hasError = true;
+    }
+    if (!passwordCheck) {
+      error.confirmPassword = hasError = true;
+    }
+    if (!email) {
+      error.email = hasError = true;
+    }
+    if (!emailCheck) {
+      error.emailConfirm = hasError = true;
+    }
+    this.setState({ error });
+    return !hasError
+  };
 
- setUrl = (url) => {
-   this.setState({url})
- }
+  update = () => {
+    this.forceUpdate()
+  }
 
- handleChange = (prop, val) =>{
-   
-  this.setState({
-    [prop]:val
-  })
+  setUrl = (url) => {
+    this.setState({ url })
+  }
 
- }
+  handleChange = (prop, val) => {
 
- handleEditSubmit = () =>{
+    this.setState({
+      [prop]: val
+    })
 
- }
+  }
+
+  handleEditSubmit = () => {
+    this.setState({
+      username: "",
+      password: "",
+      passwordCheck: "",
+      email: "",
+      emailCheck: "",
+      name: "",
+      bio: "",
+      url: profileHolder,
+    });
+  }
+
+  validate2 = () => {
+    const { bio, name, error } = this.state
+    let hasError = false
+    if (!bio) {
+      error.bio = hasError = true
+    }
+    if (!name) {
+      error.name = hasError = true
+    }
+    this.setState({ error });
+    return !hasError
+  }
+
+  handleChange = (prop, val) => {
+    this.setState({
+      [prop]: val
+    });
+  };
 
   // checks if email is not blank and that emails match
   checkEmail = () => {
-    if (this.state.email.length < 1) { return false }
-    else if (this.state.email.length >= 1) {
-      if (this.state.email != this.state.emailCheck) { console.log('email not match')  }
-      else if (this.state.email === this.state.emailCheck) { return true }
-    } else { return true }
-  }
+    if (this.state.email.length < 1) {
+      return false;
+    } else if (this.state.email.length >= 1) {
+      if (this.state.email != this.state.emailCheck) {
+        console.log("email not match");
+      } else if (this.state.email === this.state.emailCheck) {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
 
   // checks if password is not blank and that passwords match
   checkPassword = () => {
-    if (this.state.password.length < 1) { return false }
-    else if (this.state.password.length >= 1) {
-      if (this.state.password != this.state.passwordCheck) { console.log('password not match') }
-      else if (this.state.password === this.state.passwordCheck) { return true }
-    } else { return true }
-  }
+    if (this.state.password.length < 1) {
+      return false;
+    } else if (this.state.password.length >= 1) {
+      if (this.state.password != this.state.passwordCheck) {
+        console.log("password not match");
+      } else if (this.state.password === this.state.passwordCheck) {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
 
   // checks if password and email blank, if not then it checks if both passwords and emails match if they match then it will proceed with registration
   handleSubmit = async () => {
-    console.log('submit clicked')
     if (this.checkEmail() === true) {
-      console.log('email match')
-    } else { console.log('emails dont match') }
+      console.log("email match");
+    } else {
+      console.log("emails dont match");
+    }
     if (this.checkPassword() === true) {
-      console.log('password match')
-    } else { console.log('passwords dont match') }
+      console.log("password match");
+    } else {
+      console.log("passwords dont match");
+    }
     if (this.checkEmail() === true && this.checkPassword() === true) {
       let user = {
         username: this.state.username,
@@ -79,42 +160,52 @@ class RegisterState extends Component {
         bio: this.state.bio,
         profile_pic: this.state.url,
         name: this.state.name
-      }
+      };
       try {
-
-        let res = await axios.post('/register', user)
+        let res = await axios.post("/register", user);
         if (res.data === "username") {
-          alert('Pick different Username')
+          alert("Pick different Username");
         }
-        if (res.data === 'email') {
-          alert('Pick different Email')
+        if (res.data === "email") {
+          alert("Pick different Email");
         } else {
-          this.setState({ username: '', password: '', passwordCheck: '', email: '', emailCheck: '' })
+          this.setState({
+            username: "",
+            password: "",
+            passwordCheck: "",
+            email: "",
+            emailCheck: ""
+          });
         }
-      } catch (err) { console.log(err) }
+      } catch (err) {
+        console.log(err);
+      }
     }
+    this.handleEditSubmit()
+  };
+
+
+
+  render() {
+    return (
+      <Provider
+        value={{
+          url: this.state.url,
+          state: this.state,
+          handleChange: this.handleChange,
+          handleSubmit: this.handleSubmit,
+          setUrl: this.setUrl,
+          update: this.update,
+          validate1: this.validate1,
+          validate2: this.validate2
+        }}
+      >
+        {this.props.children}
+      </Provider>
+    )
   }
-
-
-
- render() {
-   return (
-     <Provider
-       value={{
-         url: this.state.url,
-         state: this.state,
-         handleChange: this.handleChange,
-         handleSubmit: this.handleSubmit,
-         setUrl: this.setUrl,
-         update: this.update
-       }}
-     >
-       {this.props.children}
-     </Provider>
-   )
- }
 }
 
-export { RegisterState }
+export { RegisterState };
 
-export default Consumer
+export default Consumer;
