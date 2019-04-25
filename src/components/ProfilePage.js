@@ -112,7 +112,6 @@ function Profile(props) {
 
   };
 
-  console.log(name)
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '75px', marginRight: '3%', marginLeft: '3%', marginBottom: '2%' }}>
       <Card className={classes.card}>

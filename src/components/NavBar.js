@@ -50,7 +50,8 @@ function NavBar(props) {
   const {classes} = props
 
   useEffect(() => {
-    getUser()}) 
+    getUser()
+  }) 
 
     async function handleLogout() {
       await axios.post('/logout')
@@ -96,8 +97,8 @@ NavBar.proptypes = {
 
 export default withRouter(withStyles(styles)(props => (
   <Consumer>
-    {RegisterState => {
-      return <NavBar {...props} RegisterState = {RegisterState} />
+    {registerState => {
+      return <NavBar {...props} registerState={registerState} url={registerState.url}/>
     }}
   </Consumer>
 )))

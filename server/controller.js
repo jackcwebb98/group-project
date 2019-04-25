@@ -50,7 +50,6 @@ module.exports = {
         profile_pic
       });
       user = user[0];
-      console.log(user, 1321312321312313213123213232232323)
       session.user = user;
       res.status(200).send(session.user);
     } catch (err) {

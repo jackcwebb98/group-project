@@ -24,10 +24,24 @@ class RegisterState extends Component {
    }
  }
 
+ update = () => {
+   this.forceUpdate()
+ }
+
+ setUrl = (url) => {
+   this.setState({url})
+ }
+
  handleChange = (prop, val) =>{
+   
   this.setState({
     [prop]:val
   })
+
+ }
+
+ handleEditSubmit = () =>{
+
  }
 
   // checks if email is not blank and that emails match
@@ -84,13 +98,15 @@ class RegisterState extends Component {
 
 
  render() {
-   console.log(this.state, 'state for register')
    return (
      <Provider
        value={{
+         url: this.state.url,
          state: this.state,
          handleChange: this.handleChange,
-         handleSubmit: this.handleSubmit
+         handleSubmit: this.handleSubmit,
+         setUrl: this.setUrl,
+         update: this.update
        }}
      >
        {this.props.children}

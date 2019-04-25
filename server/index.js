@@ -50,7 +50,6 @@ app.post(`/logout`, ctrl.logout)
 
 server.listen(SERVER_PORT)
 io.on('connection', function(socket){
-
   socket.on('joinRoom', function(roomName){
     console.log(roomName,'roomname join')
     socket.join(roomName)

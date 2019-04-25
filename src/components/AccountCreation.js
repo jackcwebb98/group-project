@@ -15,7 +15,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import {default as RegisterConsumer}from './../RegisterState';
 import {default as UserConsumer}from './../UserState';
 import { withRouter } from 'react-router-dom';
-import { checkUser } from '../util';
 
 
 
@@ -47,7 +46,6 @@ class AccountCreation extends Component {
 
 
   getSignedRequest = ([file]) => {
-    console.log('image22222')
     this.setState({ isUploading: true });
     const fileName = `${randomString()}-${file.name.replace(/\s/g, '-')}`;
 
@@ -76,13 +74,10 @@ class AccountCreation extends Component {
     };
 
 
-
-
-
     axios
       .put(signedRequest, file, options)
       .then(response => {
-        this.props.registerState.state.url = url
+        this.props.registerState.setUrl(url)
         this.setState({ isUploading: false });
       })
       .catch(err => {
@@ -122,6 +117,7 @@ class AccountCreation extends Component {
   }
 
   render(props) {
+
     const { pathname } = this.props.location
     const { classes } = this.props;
     const { isUploading } = this.state;
@@ -199,7 +195,7 @@ class AccountCreation extends Component {
                 name="bio"
                 label="Bio"
                 fullWidth
-                multiline='true'
+                multiline
                 rows='4'
               />
             </Grid>

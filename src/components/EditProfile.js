@@ -32,7 +32,12 @@ function EditCard(props) {
   const handleBoth = () => {
     handleDialogOpen();
     updateUser();
+    props.update()
   };
+
+  useEffect(() => {
+    setProfilePic(props.registerState.state.url)
+  },[props.registerState.state.url])
 
 
   return (
@@ -41,7 +46,7 @@ function EditCard(props) {
         <div style={{ margin: '19px' }}>
           <AccountCreation
             profilePic={profilePic}
-            setProfilePic={setProfilePic}
+            onChange={e => setProfilePic(e.target.value)}
           />
           <DialogContentText>Name</DialogContentText>
           <TextField
@@ -52,7 +57,7 @@ function EditCard(props) {
           <DialogContentText>Bio</DialogContentText>
           <TextField
             defaultValue={bio}
-            multiline='true'
+            multiline
             maxLength='140'
             fullWidth
             onChange={e => setBio(e.target.value)}
@@ -60,7 +65,6 @@ function EditCard(props) {
           <DialogActions>
             <Button onClick={handleBoth}>Submit</Button>
           </DialogActions>
-          {profilePic}
         </div>
 
       </Dialog>
@@ -70,11 +74,10 @@ function EditCard(props) {
   );
 }
 
-console.log(registerState, 12341232132131);
 export default (props => (
   <Consumer>
     {registerState => {
-      return <EditCard {...props} registerState={registerState} />
+      return <EditCard {...props} registerState={registerState} update={registerState.update}/>
     }}
   </Consumer>
 ))

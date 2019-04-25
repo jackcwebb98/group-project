@@ -20,7 +20,6 @@ class UserState extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <Provider
         value={{

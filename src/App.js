@@ -14,12 +14,6 @@ class App extends Component {
   
   render() {
 
-    const theme = createMuiTheme({
-      typography: {
-        useNextVariants: true,
-        suppressDeprecationWarnings: true
-      }
-  });
 
     return (
       <UserState>
