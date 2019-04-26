@@ -9,8 +9,13 @@ import {
   DialogActions,
   Button
 } from "@material-ui/core";
+import AccountCreation from './AccountCreation'
+import Consumer from './../RegisterState'
+import registerState from './../RegisterState'
+import { renderHelp } from './NavBar'
 
-const styles = theme => {};
+
+const styles = theme => { };
 function EditCard(props) {
   const {
     bio,
@@ -24,28 +29,46 @@ function EditCard(props) {
     updateUser
   } = props;
 
+  const [profile_Pic, setProfile_Pic] = useState(props.profilePic)
   const handleBoth = () => {
     handleDialogOpen();
     updateUser();
+    props.navNeedsToUpdateFn()
   };
+  
+  useEffect(() => {
+    setProfilePic(props.registerState.state.url)
+    props.navNeedsToUpdateFn()
+  },[props.registerState.state.url, props.navNeedsToUpdateFn])
+
 
   return (
-    <div>
-      <Dialog open={dialogOpen} onClose={handleDialogOpen}>
-        <DialogTitle>Edit Profile</DialogTitle>
-        <DialogContentText>Name</DialogContentText>
-        <TextField
-          defaultValue={name}
-          onChange={e => setName(e.target.value)}
-        />
-        <DialogContentText>Bio</DialogContentText>
-        <TextField
-          defaultValue={bio}
-          onChange={e => setBio(e.target.value)}
-        />
-        <DialogActions>
-          <Button onClick={handleBoth}>Submit</Button>
-        </DialogActions>
+    <div >
+      <Dialog open={dialogOpen} onClose={handleDialogOpen} style={{ marginLeft: '-11%', marginRight: '-11%' }}>
+        <div style={{ margin: '19px' }}>
+          <AccountCreation
+            profilePic={profilePic}
+            onChange={e => setProfilePic(e.target.value)}
+          />
+          <DialogContentText>Name</DialogContentText>
+          <TextField
+            defaultValue={name}
+            onChange={e => setName(e.target.value)}
+            fullWidth
+          />
+          <DialogContentText>Bio</DialogContentText>
+          <TextField
+            defaultValue={bio}
+            multiline
+            maxLength='140'
+            fullWidth
+            onChange={e => setBio(e.target.value)}
+          />
+          <DialogActions>
+            <Button onClick={handleBoth}>Submit</Button>
+          </DialogActions>
+        </div>
+
       </Dialog>
     </div>
 
@@ -53,4 +76,10 @@ function EditCard(props) {
   );
 }
 
-export default withStyles(styles)(EditCard);
+export default (props => (
+  <Consumer>
+    {registerState => {
+      return <EditCard {...props} registerState={registerState} update={registerState.update} navNeedsToUpdateFn={registerState.navNeedsToUpdateFn}/>
+    }}
+  </Consumer>
+))

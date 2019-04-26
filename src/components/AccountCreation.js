@@ -12,7 +12,10 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Consumer from "./../RegisterState";
+import {default as UserConsumer } from './../UserState'
+import {default as RegisterConsumer } from './../RegisterState'
+import { withRouter } from 'react-router-dom';
+
 
 const styles = theme => ({
   card: {
@@ -39,6 +42,7 @@ class AccountCreation extends Component {
       isUploading: false
     };
   }
+
 
   getSignedRequest = ([file]) => {
     this.setState({ isUploading: true });
@@ -67,10 +71,13 @@ class AccountCreation extends Component {
       }
     };
 
+
     axios
       .put(signedRequest, file, options)
       .then(response => {
-        this.props.registerState.state.url = url;
+        this.props.registerState.setUrl(url)
+        console.log(this.props.registerState.url);
+        
         this.setState({ isUploading: false });
       })
       .catch(err => {
@@ -110,29 +117,28 @@ class AccountCreation extends Component {
   };
 
   render(props) {
-    console.log(this.state.isUploading);
-    console.log(this.props.registerState.state.url);
+
+    const { pathname } = this.props.location
     const { classes } = this.props;
     const { isUploading } = this.state;
     return (
-      <React.Fragment>
+      <>
         <Typography variant="h6" gutterBottom>
           Profile info
         </Typography>
-        <div className={classes.cardWrap}>
+        <div className={classes.cardWrap} style={{ marginLeft: '-3.5%', marginRight: '-3.5%' }}>
+
           <Card className={classes.card}>
             <CardActionArea>
               <CardMedia
                 className={classes.media}
-                image={this.props.registerState.state.url}
+                image={pathname !== '/profile' ? this.props.registerState.state.url : this.props.profilePic}
               />
-              <CardContent>
+              <CardContent >
                 <Dropzone
                   onDropAccepted={this.getSignedRequest}
                   style={{
                     position: "relative",
-                    // width: '60vw',
-                    // height: '20vh',
                     margin: 10,
                     border: "dashed 1px",
                     borderColor: "rgb(102, 102, 102, 0.4)",
@@ -173,37 +179,35 @@ class AccountCreation extends Component {
         </div>
         <br />
         <br />
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <TextField
-              error={this.props.registerState.state.error.name}
-              onChange={e =>
-                this.props.registerState.handleChange("name", e.target.value)
-              }
-              required
-              id="Name"
-              name="Name"
-              label="First and last name"
-              fullWidth
-              autoComplete="username"
-            />
+        {pathname !== '/profile' ? (
+
+          <Grid container spacing={24}>
+            <Grid item xs={12}>
+              <TextField
+                onChange={e => this.props.registerState.handleChange("name", e.target.value)}
+                required
+                id="Name"
+                name="Name"
+                label="First and last name"
+                fullWidth
+                autoComplete="username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                onChange={e => this.props.registerState.handleChange("bio", e.target.value)}
+                id="bio"
+                name="bio"
+                label="Bio"
+                fullWidth
+                multiline
+                rows='4'
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              error={this.props.registerState.state.error.bio}
-              onChange={e =>
-                this.props.registerState.handleChange("bio", e.target.value)
-              }
-              id="bio"
-              name="bio"
-              label="Bio"
-              fullWidth
-              multiline="true"
-              rows="4"
-            />
-          </Grid>
-        </Grid>
-      </React.Fragment>
+        ) : null}
+
+      </>
     );
   }
 }
@@ -211,11 +215,22 @@ class AccountCreation extends Component {
 AccountCreation.propTypes = {
   classes: PropTypes.object.isRequired
 };
+export default withRouter(withStyles(styles)(props => (
+  <UserConsumer>
+    {userState => (
+      <RegisterConsumer>
+        {registerState => {
+          return <AccountCreation {...props} userState={userState} registerState={registerState} />
+        }}
+      </RegisterConsumer>
+    )}
+  </UserConsumer>
+)));
 
-export default withStyles(styles)(props => (
-  <Consumer>
-    {registerState => {
-      return <AccountCreation {...props} registerState={registerState} />;
-    }}
-  </Consumer>
-));
+
+
+
+
+
+
+

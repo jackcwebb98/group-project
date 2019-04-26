@@ -2,7 +2,6 @@ import React, { Component, createContext } from "react";
 import profileHolder from "./components/images/ProfileHolder.png";
 
 import axios from "axios";
-import { setTimeout } from "timers";
 
 // Provider and Consumer are connected through their "parent" context
 const { Provider, Consumer } = createContext();
@@ -21,6 +20,7 @@ class RegisterState extends Component {
       name: "",
       bio: "",
       url: profileHolder,
+      navNeedsToUpdate: 0,
       error: {
         username: false,
         email: false,
@@ -31,6 +31,11 @@ class RegisterState extends Component {
         bio: false
       }
     };
+  }
+
+  navNeedsToUpdateFn = () => {
+    const navNeedsToUpdate = navNeedsToUpdate + 1
+    this.setState({navNeedsToUpdate})
   }
 
   validate1 = () => {
@@ -62,13 +67,42 @@ class RegisterState extends Component {
     return !hasError
   };
 
+  update = () => {
+    this.forceUpdate()
+  }
+
+  setUrl = (url) => {
+    this.setState({ url })
+  }
+
+  handleChange = (prop, val) => {
+
+    this.setState({
+      [prop]: val
+    })
+
+  }
+
+  handleEditSubmit = () => {
+    this.setState({
+      username: "",
+      password: "",
+      passwordCheck: "",
+      email: "",
+      emailCheck: "",
+      name: "",
+      bio: "",
+      url: profileHolder,
+    });
+  }
+
   validate2 = () => {
-    const {bio, name, error} = this.state
+    const { bio, name, error } = this.state
     let hasError = false
-    if(!bio){
+    if (!bio) {
       error.bio = hasError = true
     }
-    if(!name){
+    if (!name) {
       error.name = hasError = true
     }
     this.setState({ error });
@@ -113,7 +147,6 @@ class RegisterState extends Component {
 
   // checks if password and email blank, if not then it checks if both passwords and emails match if they match then it will proceed with registration
   handleSubmit = async () => {
-    console.log("submit clicked");
     if (this.checkEmail() === true) {
       console.log("email match");
     } else {
@@ -141,7 +174,9 @@ class RegisterState extends Component {
         if (res.data === "email") {
           alert("Pick different Email");
         } else {
+          const navNeedsToUpdate = this.state.navNeedsToUpdate + 1
           this.setState({
+            navNeedsToUpdate,
             username: "",
             password: "",
             passwordCheck: "",
@@ -155,21 +190,28 @@ class RegisterState extends Component {
     }
   };
 
+
+
   render() {
-    console.log(this.state);
     return (
       <Provider
         value={{
+          navNeedsToUpdateFn: this.navNeedsToUpdateFn,
+          navNeedsToUpdate: this.state.navNeedsToUpdate,
+          url: this.state.url,
           state: this.state,
           handleChange: this.handleChange,
           handleSubmit: this.handleSubmit,
+          handleEditSubmit: this.handleEditSubmit,
+          setUrl: this.setUrl,
+          update: this.update,
           validate1: this.validate1,
           validate2: this.validate2
         }}
       >
         {this.props.children}
       </Provider>
-    );
+    )
   }
 }
 

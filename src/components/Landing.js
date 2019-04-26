@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core'
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import {checkUser} from '../util' 
+
 
 
 const styles = theme => ({
@@ -18,7 +20,7 @@ const styles = theme => ({
 
   },
   search: {
-    minWidth: '60%',
+    minWidth: '75%',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -66,7 +68,7 @@ function Landing(props) {
   useEffect(() => {
     grabUsers();
   }, []);
-  
+
 
   async function grabUsers() {
     let user = await axios.get(`/landingpage`).then(res => {
@@ -114,19 +116,19 @@ function Landing(props) {
   return (
 
     <div style={{ padding: 25, marginTop: '75px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search..."
-              onChange={filteredSearch}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              />
-          </div>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder="Search..."
+          onChange={filteredSearch}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+        />
+      </div>
       <div style={{ padding: 25, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {mapped}
       </div>

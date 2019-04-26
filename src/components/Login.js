@@ -9,6 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import logo from "./images/BlackLogo.png";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Consumer from "./../RegisterState";
 
 const styles = theme => ({
   main: {
@@ -84,6 +85,7 @@ function Login(props) {
 
       try {
         let res = await axios.post("login", user);
+        props.navNeedsToUpdateFn()
         props.history.push("/landing");
       } catch (err) {
         alert("Incorrect username or password");
@@ -171,4 +173,11 @@ function Login(props) {
   );
 }
 
-export default withStyles(styles)(Login);
+// export default withStyles(styles)(Login);
+export default withStyles(styles)(props => (
+  <Consumer>
+    {registerState => {
+      return <Login {...props} navNeedsToUpdateFn={registerState.navNeedsToUpdateFn} />;
+    }}
+  </Consumer>
+));

@@ -1,27 +1,34 @@
 const bcrypt = require("bcryptjs");
 
+async function login(req, res){
+  const { username, password } = req.body;
+  const { session } = req;
+  const db = req.app.get("db");
+
+  let user = await db.auth.login({ username });
+
+  user = user[0];
+
+  if (!user) {
+    return res.sendStatus(404);
+  }
+  let authenticated = bcrypt.compareSync(password, user.password);
+  if (authenticated) {
+    delete user.password;
+    session.user = user;
+
+    res.status(200).send(session.user);
+  } else {
+    res.sendStatus(401);
+  }
+  console.log('session', req.session);
+  
+}
+
 module.exports = {
   login: async (req, res) => {
-    const { username, password } = req.body;
-    const { session } = req;
-    const db = req.app.get("db");
+    login(req, res)
 
-    let user = await db.auth.login({ username });
-
-    user = user[0];
-
-    if (!user) {
-      return res.sendStatus(404);
-    }
-    let authenticated = bcrypt.compareSync(password, user.password);
-    if (authenticated) {
-      delete user.password;
-      session.user = user;
-
-      res.status(200).send(session.user);
-    } else {
-      res.sendStatus(401);
-    }
   },
 
   register: async (req, res) => {
@@ -50,8 +57,16 @@ module.exports = {
         profile_pic
       });
       user = user[0];
+
       session.user = user;
-      res.status(200).send(session.user);
+      // req.session.save(function(err) {
+      //   login(req, res)
+      // })
+      setTimeout(function(){
+        
+        res.status(200).send(session.user);
+      }, 500)
+      
     } catch (err) {
       console.log(err);
     }
@@ -113,10 +128,8 @@ module.exports = {
       const { session } = req;
   
       if (user) {
-        console.log(user)
         let newUser = await db.auth.get_user({user_id: user.user_id});
         session.user = newUser[0];
-        console.log(newUser[0])
         res.status(200).send(newUser[0]);
       } else {
         res.send("no user");
@@ -130,6 +143,7 @@ module.exports = {
     req.session.destroy(function() {
       res.sendStatus(200);
     });
+    
   },
 
   surveySubmit: (req, res) => {

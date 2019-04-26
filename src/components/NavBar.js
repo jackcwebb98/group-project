@@ -11,7 +11,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import logoWords from './images/wordsOnlyWhite.png'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper'
 
 
 const styles = theme => ({
@@ -51,7 +50,9 @@ function NavBar(props) {
   const {classes} = props
 
   useEffect(() => {
-    getUser()}) 
+    getUser()
+    props.navNeedsToUpdateFn()
+  }, [props.navNeedsToUpdateFn]) 
 
     async function handleLogout() {
       await axios.post('/logout')
@@ -59,7 +60,9 @@ function NavBar(props) {
       props.history.push('/')
     }
 
+    
     async function getUser() {
+      console.log('hit')
       let user = await axios.get('/currentuser')
       const {profile_pic} = user.data
       setProfilePic(profile_pic)
@@ -76,7 +79,8 @@ function NavBar(props) {
             <AppBar className={classes.Nav}>
               <Toolbar className={classes.Toolbar}>
                 <IconButton onClick={toProfile} className={classes.menuButton} color="inherit" aria-label="Menu">
-                  <Avatar src={profilePic} alt='placeholder for profile icon' variant="raised" className={classes.avatar}/>
+                <Button classes={classes.button} color='inherit'>profile</Button>
+                  {/* <Avatar src={profilePic} alt='placeholder for profile icon' variant="raised" className={classes.avatar}/> */}
                 </IconButton>
                 <div variant="h6" color="inherit" className={classes.grow}>
                   <img src={logoWords} alt="" className={classes.img}/>
@@ -97,8 +101,8 @@ NavBar.proptypes = {
 
 export default withRouter(withStyles(styles)(props => (
   <Consumer>
-    {RegisterState => {
-      return <NavBar {...props} RegisterState = {RegisterState} />
+    {registerState => {
+      return <NavBar {...props} registerState={registerState} navNeedsToUpdateFn={registerState.navNeedsToUpdateFn} url={registerState.url} handleEditSubmit={registerState.handleEditSubmit} update={registerState.update}/>
     }}
   </Consumer>
 )))
