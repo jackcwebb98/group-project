@@ -12,6 +12,7 @@ import {
 import AccountCreation from './AccountCreation'
 import Consumer from './../RegisterState'
 import registerState from './../RegisterState'
+import { renderHelp } from './NavBar'
 
 
 const styles = theme => { };
@@ -32,12 +33,13 @@ function EditCard(props) {
   const handleBoth = () => {
     handleDialogOpen();
     updateUser();
-    props.update()
+    props.navNeedsToUpdateFn()
   };
-
+  
   useEffect(() => {
     setProfilePic(props.registerState.state.url)
-  },[props.registerState.state.url])
+    props.navNeedsToUpdateFn()
+  },[props.registerState.state.url, props.navNeedsToUpdateFn])
 
 
   return (
@@ -77,7 +79,7 @@ function EditCard(props) {
 export default (props => (
   <Consumer>
     {registerState => {
-      return <EditCard {...props} registerState={registerState} update={registerState.update} />
+      return <EditCard {...props} registerState={registerState} update={registerState.update} navNeedsToUpdateFn={registerState.navNeedsToUpdateFn}/>
     }}
   </Consumer>
 ))

@@ -2,7 +2,6 @@ import React, { Component, createContext } from "react";
 import profileHolder from "./components/images/ProfileHolder.png";
 
 import axios from "axios";
-import { setTimeout } from "timers";
 
 // Provider and Consumer are connected through their "parent" context
 const { Provider, Consumer } = createContext();
@@ -21,6 +20,7 @@ class RegisterState extends Component {
       name: "",
       bio: "",
       url: profileHolder,
+      navNeedsToUpdate: 0,
       error: {
         username: false,
         email: false,
@@ -31,6 +31,11 @@ class RegisterState extends Component {
         bio: false
       }
     };
+  }
+
+  navNeedsToUpdateFn = () => {
+    const navNeedsToUpdate = navNeedsToUpdate + 1
+    this.setState({navNeedsToUpdate})
   }
 
   validate1 = () => {
@@ -169,7 +174,9 @@ class RegisterState extends Component {
         if (res.data === "email") {
           alert("Pick different Email");
         } else {
+          const navNeedsToUpdate = this.state.navNeedsToUpdate + 1
           this.setState({
+            navNeedsToUpdate,
             username: "",
             password: "",
             passwordCheck: "",
@@ -180,7 +187,6 @@ class RegisterState extends Component {
       } catch (err) {
         console.log(err);
       }
-      this.handleEditSubmit()
     }
   };
 
@@ -190,6 +196,8 @@ class RegisterState extends Component {
     return (
       <Provider
         value={{
+          navNeedsToUpdateFn: this.navNeedsToUpdateFn,
+          navNeedsToUpdate: this.state.navNeedsToUpdate,
           url: this.state.url,
           state: this.state,
           handleChange: this.handleChange,

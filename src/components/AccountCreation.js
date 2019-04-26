@@ -76,6 +76,8 @@ class AccountCreation extends Component {
       .put(signedRequest, file, options)
       .then(response => {
         this.props.registerState.setUrl(url)
+        console.log(this.props.registerState.url);
+        
         this.setState({ isUploading: false });
       })
       .catch(err => {

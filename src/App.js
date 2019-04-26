@@ -20,10 +20,11 @@ class App extends Component {
         <RegisterState>
           <HashRouter>
             <MuiThemeProvider theme={defaultTheme}>
-            <div className="App">{routes}
-            <CssBaseline />
-              <NavBar location={this.props.location} />
-            </div>
+              <div className="App">
+                {routes}
+                <CssBaseline />
+                <NavBar location={this.props.location} />
+              </div>
             </MuiThemeProvider>
           </HashRouter>
         </RegisterState>
